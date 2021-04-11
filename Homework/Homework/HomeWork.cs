@@ -22,50 +22,48 @@ namespace Homework
                 Console.WriteLine("Incorect input");
                 return fullPrice;
             }
-            else
+
+            for (int i = 0; i < destinations.Count(); i++)
             {
-                for (int i = 0; i < destinations.Count(); i++)
+                var discountPrice = prices.ElementAt(i);
+
+                if (currencies.ElementAt(i) == "EUR")
                 {
-                    var discountPrice = prices.ElementAt(i);
-
-                    if (currencies.ElementAt(i) == "EUR")
-                    {
-                        discountPrice *= 1.19m;
-                    }
-                    if (Regex.IsMatch(destinations.ElementAt(i), "Wayne Street"))
-                    {
-                        discountPrice += 10;
-                    }
-                    if (Regex.IsMatch(destinations.ElementAt(i), "North Heather Street"))
-                    {
-                        discountPrice -= 5.36m;
-                    }
-                    foreach (var item in infantsIds)
-                    {
-                        if (i == item)
-                        {
-                            discountPrice -= discountPrice / 2;
-                        }
-                    }
-                    foreach (var item in childrenIds)
-                    {
-                        if (i == item)
-                        {
-                            discountPrice -= discountPrice / 4;
-                        }
-                    }
-                    if (i != 0 && i < destinations.Count())
-                    {
-                        if (destinations.ElementAt(i).Remove(0, destinations.ElementAt(i).IndexOf(' ') + 1) == destinations.ElementAt(i - 1).Remove(0, destinations.ElementAt(i - 1).IndexOf(' ') + 1))
-                        {
-                            discountPrice -= discountPrice * 15 / 100;
-                        }
-                    }
-
-                    fullPrice += discountPrice;
+                    discountPrice *= 1.19m;
                 }
-                return fullPrice;
+                if (Regex.IsMatch(destinations.ElementAt(i), "Wayne Street"))
+                {
+                    discountPrice += 10;
+                }
+                if (Regex.IsMatch(destinations.ElementAt(i), "North Heather Street"))
+                {
+                    discountPrice -= 5.36m;
+                }
+                foreach (var item in infantsIds)
+                {
+                    if (i == item)
+                    {
+                        discountPrice -= discountPrice / 2;
+                    }
+                }
+                foreach (var item in childrenIds)
+                {
+                    if (i == item)
+                    {
+                        discountPrice -= discountPrice / 4;
+                    }
+                }
+                if (i != 0 && i < destinations.Count())
+                {
+                    if (destinations.ElementAt(i).Remove(0, destinations.ElementAt(i).IndexOf(' ') + 1) == destinations.ElementAt(i - 1).Remove(0, destinations.ElementAt(i - 1).IndexOf(' ') + 1))
+                    {
+                        discountPrice -= discountPrice * 15 / 100;
+                    }
+                }
+
+                fullPrice += discountPrice;
             }
+            return fullPrice;
         }
 
         public decimal InvokePriceCalculatiion()
