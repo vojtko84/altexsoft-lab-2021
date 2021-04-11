@@ -17,11 +17,16 @@ namespace Homework
         {
             decimal fullPrice = default;
 
-            if (destinations.Count() == clients.Count() && destinations.Count() == prices.Count() && destinations.Count() == currencies.Count())
+            if (!(destinations.Count() == clients.Count() && destinations.Count() == prices.Count() && destinations.Count() == currencies.Count()))
+            {
+                Console.WriteLine("Incorect input");
+                return fullPrice;
+            }
+            else
             {
                 for (int i = 0; i < destinations.Count(); i++)
                 {
-                    decimal discountPrice = prices.ElementAt(i);
+                    var discountPrice = prices.ElementAt(i);
 
                     if (currencies.ElementAt(i) == "EUR")
                     {
@@ -59,13 +64,8 @@ namespace Homework
 
                     fullPrice += discountPrice;
                 }
+                return fullPrice;
             }
-            else
-            {
-                Console.WriteLine("Incorect input");
-            }
-
-            return fullPrice;
         }
 
         public decimal InvokePriceCalculatiion()
