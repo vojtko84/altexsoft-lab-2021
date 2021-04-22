@@ -1,12 +1,16 @@
-﻿using System;
+﻿using Mydelivery.Controllers;
+using Mydelivery.Models;
+using System;
 
 namespace Mydelivery
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var navigationController = new NavigationController();
+
+            navigationController.RunMenu();
         }
     }
 }
