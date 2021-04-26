@@ -1,6 +1,5 @@
 ﻿using Mydelivery.Controllers;
-using Mydelivery.Models;
-using System;
+using Mydelivery.Data;
 
 namespace Mydelivery
 {
@@ -8,9 +7,11 @@ namespace Mydelivery
     {
         private static void Main(string[] args)
         {
-            var navigationController = new NavigationController();
+            var context = new Context();
 
-            navigationController.RunMenu();
+            var presenter = new Presenter(context);
+
+            presenter.Run();
         }
     }
 }

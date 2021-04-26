@@ -6,6 +6,6 @@
         public string Description { get; set; }
         public decimal Price { get; set; }
         public int CategoryId { get; set; }
-        public int SallerId { get; set; }
+        public int SellerId { get; set; }
     }
 }
