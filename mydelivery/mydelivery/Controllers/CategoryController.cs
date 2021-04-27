@@ -1,14 +1,15 @@
 ﻿using Mydelivery.Data;
+using Mydelivery.Interfaces;
 using Mydelivery.Models;
 using System.Collections.Generic;
 
 namespace Mydelivery.Controllers
 {
-    public class CategoryController
+    public class CategoryController : ICategoryController
     {
-        private readonly Context context;
+        private readonly IContext context;
 
-        public CategoryController(Context context)
+        public CategoryController(IContext context)
         {
             this.context = context;
         }

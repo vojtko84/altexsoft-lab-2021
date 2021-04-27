@@ -1,4 +1,4 @@
-﻿using Mydelivery.Data;
+﻿using Mydelivery.Interfaces;
 using Mydelivery.Models;
 using System;
 
@@ -6,21 +6,21 @@ namespace Mydelivery.Controllers
 {
     public class Presenter
     {
-        private readonly Context context;
-        private readonly UserController userController;
-        private readonly ProductController productController;
-        private readonly OrderController orderController;
-        private readonly CategoryController categoryController;
-        private readonly DeliveryAddressController deliveryAddressController;
+        private readonly IContext context;
+        private readonly IUserController userController;
+        private readonly IProductController productController;
+        private readonly IOrderController orderController;
+        private readonly ICategoryController categoryController;
+        private readonly IDeliveryAddressController deliveryAddressController;
 
-        public Presenter(Context context)
+        public Presenter(IContext context, IUserController userController, IProductController productController, IOrderController orderController, ICategoryController categoryController, IDeliveryAddressController deliveryAddressController)
         {
             this.context = context;
-            userController = new UserController();
-            productController = new ProductController(context);
-            categoryController = new CategoryController(context);
-            deliveryAddressController = new DeliveryAddressController(context);
-            orderController = new OrderController(context);
+            this.userController = userController;
+            this.productController = productController;
+            this.categoryController = categoryController;
+            this.deliveryAddressController = deliveryAddressController;
+            this.orderController = orderController;
         }
 
         public void Run()
@@ -100,7 +100,7 @@ namespace Mydelivery.Controllers
         }
 
         private void ShowProducts()
-        {            
+        {
             foreach (var item in productController.GetProducts())
             {
                 Console.WriteLine($"{item.Id}. {item.Name}");

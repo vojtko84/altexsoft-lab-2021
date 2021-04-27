@@ -1,8 +1,9 @@
-﻿using Mydelivery.Models;
+﻿using Mydelivery.Interfaces;
+using Mydelivery.Models;
 
 namespace Mydelivery.Controllers
 {
-    public class UserController
+    public class UserController : IUserController
     {
         public IUser User { get; set; }
 

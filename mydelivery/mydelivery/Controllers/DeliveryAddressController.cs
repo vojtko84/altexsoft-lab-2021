@@ -1,13 +1,14 @@
 ﻿using Mydelivery.Data;
+using Mydelivery.Interfaces;
 using Mydelivery.Models;
 
 namespace Mydelivery.Controllers
 {
-    public class DeliveryAddressController
+    public class DeliveryAddressController : IDeliveryAddressController
     {
-        private readonly Context context;
+        private readonly IContext context;
 
-        public DeliveryAddressController(Context context)
+        public DeliveryAddressController(IContext context)
         {
             this.context = context;
         }

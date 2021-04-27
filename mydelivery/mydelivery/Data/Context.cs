@@ -1,9 +1,10 @@
-﻿using Mydelivery.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Mydelivery.Interfaces;
+using Mydelivery.Models;
 
 namespace Mydelivery.Data
 {
-    public class Context
+    public class Context : IContext
     {
         public IList<Product> Products { get; set; }
         public IList<Buyer> Buyers { get; set; }
