@@ -41,7 +41,7 @@ namespace MyDelivery.Controllers
 
         public void DeleteProduct(int id)
         {
-            var productToRemove = context.Products.Where(product => product.Id == id).FirstOrDefault();
+            var productToRemove = GetProduct(id);
             context.Products.Remove(productToRemove);
         }
     }
