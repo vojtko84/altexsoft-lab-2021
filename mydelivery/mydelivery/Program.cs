@@ -1,7 +1,7 @@
-﻿using Mydelivery.Controllers;
-using Mydelivery.Data;
+﻿using MyDelivery.Controllers;
+using MyDelivery.Data;
 
-namespace Mydelivery
+namespace MyDelivery
 {
     internal class Program
     {

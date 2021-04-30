@@ -1,10 +1,9 @@
-﻿using Mydelivery.Data;
-using Mydelivery.Interfaces;
-using Mydelivery.Models;
+﻿using MyDelivery.Interfaces;
+using MyDelivery.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mydelivery.Controllers
+namespace MyDelivery.Controllers
 {
     public class ProductController : IProductController
     {

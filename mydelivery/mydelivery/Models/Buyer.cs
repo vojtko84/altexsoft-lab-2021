@@ -1,6 +1,6 @@
-﻿namespace Mydelivery.Models
+﻿namespace MyDelivery.Models
 {
-    public class Buyer : BaseModel, IUser
+    public class Buyer : User
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

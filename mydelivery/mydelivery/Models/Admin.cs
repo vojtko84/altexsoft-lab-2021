@@ -1,6 +1,6 @@
-﻿namespace Mydelivery.Models
+﻿namespace MyDelivery.Models
 {
-    public class Admin : BaseModel, IUser
+    public class Admin : User
     {
         public string Name { get; set; }
     }

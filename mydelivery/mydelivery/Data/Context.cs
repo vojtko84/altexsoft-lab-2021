@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Mydelivery.Interfaces;
-using Mydelivery.Models;
+﻿using MyDelivery.Interfaces;
+using MyDelivery.Models;
+using System.Collections.Generic;
 
-namespace Mydelivery.Data
+namespace MyDelivery.Data
 {
     public class Context : IContext
     {

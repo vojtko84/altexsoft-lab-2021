@@ -1,4 +1,4 @@
-﻿namespace Mydelivery.Models
+﻿namespace MyDelivery.Models
 {
     public class Сategory : BaseModel
     {

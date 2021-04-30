@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Mydelivery.Models
+namespace MyDelivery.Models
 {
     public class Order : BaseModel
     {

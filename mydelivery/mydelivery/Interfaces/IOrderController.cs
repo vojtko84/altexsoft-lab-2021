@@ -1,6 +1,6 @@
-﻿using Mydelivery.Models;
+﻿using MyDelivery.Models;
 
-namespace Mydelivery.Interfaces
+namespace MyDelivery.Interfaces
 {
     public interface IOrderController
     {

@@ -1,8 +1,7 @@
-﻿using Mydelivery.Data;
-using Mydelivery.Interfaces;
-using Mydelivery.Models;
+﻿using MyDelivery.Interfaces;
+using MyDelivery.Models;
 
-namespace Mydelivery.Controllers
+namespace MyDelivery.Controllers
 {
     public class OrderController : IOrderController
     {

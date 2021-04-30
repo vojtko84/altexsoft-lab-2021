@@ -1,6 +1,6 @@
 ﻿namespace MyDelivery.Models
 {
-    public abstract class BaseModel
+    public abstract class User
     {
         public int Id { get; set; }
     }

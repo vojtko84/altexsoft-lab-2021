@@ -1,11 +1,11 @@
-﻿using Mydelivery.Models;
+﻿using MyDelivery.Models;
 
-namespace Mydelivery.Interfaces
+namespace MyDelivery.Interfaces
 {
     public interface IUserController
     {
-        IUser User { get; set; }
+        User User { get; set; }
 
-        IUser SelectUser(string selectedUser);
+        User SelectUserType(string selectedUser);
     }
 }

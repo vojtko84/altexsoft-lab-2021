@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Mydelivery.Models;
+﻿using MyDelivery.Models;
+using System.Collections.Generic;
 
-namespace Mydelivery.Interfaces
+namespace MyDelivery.Interfaces
 {
     public interface IProductController
     {

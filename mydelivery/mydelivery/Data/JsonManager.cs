@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 
-namespace Mydelivery.Data
+namespace MyDelivery.Data
 {
     public static class JsonManager
     {

@@ -1,13 +1,13 @@
-﻿using Mydelivery.Interfaces;
-using Mydelivery.Models;
+﻿using MyDelivery.Interfaces;
+using MyDelivery.Models;
 
-namespace Mydelivery.Controllers
+namespace MyDelivery.Controllers
 {
     public class UserController : IUserController
     {
-        public IUser User { get; set; }
+        public User User { get; set; }
 
-        public IUser SelectUser(string selectedUser)
+        public User SelectUserType(string selectedUser)
         {
             return selectedUser switch
             {

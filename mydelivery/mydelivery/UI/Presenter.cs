@@ -1,8 +1,8 @@
-﻿using Mydelivery.Interfaces;
-using Mydelivery.Models;
+﻿using MyDelivery.Interfaces;
+using MyDelivery.Models;
 using System;
 
-namespace Mydelivery.Controllers
+namespace MyDelivery.Controllers
 {
     public class Presenter
     {
@@ -32,7 +32,7 @@ namespace Mydelivery.Controllers
         {
             Console.WriteLine("Hello, select user\n1. Buyer\n2. Seller\n3. Admin");
             var selectedUser = Console.ReadLine();
-            userController.User = userController.SelectUser(selectedUser);
+            userController.User = userController.SelectUserType(selectedUser);
             switch (userController.User)
             {
                 case Buyer:
