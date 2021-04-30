@@ -1,6 +1,6 @@
 ﻿namespace MyDelivery.Models
 {
-    public class Сategory : BaseModel
+    public class Category : BaseModel
     {
         public string Name { get; set; }
     }
