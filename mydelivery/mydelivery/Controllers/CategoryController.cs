@@ -1,6 +1,7 @@
 ﻿using MyDelivery.Interfaces;
 using MyDelivery.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MyDelivery.Controllers
 {
@@ -22,7 +23,7 @@ namespace MyDelivery.Controllers
         {
             var category = new Category
             {
-                Id = context.Categories.Count + 1,
+                Id = context.Categories.Max(s => s.Id) + 1,
                 Name = name
             };
             context.Categories.Add(category);

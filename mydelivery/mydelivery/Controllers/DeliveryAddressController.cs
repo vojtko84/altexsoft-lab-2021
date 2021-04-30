@@ -1,5 +1,6 @@
 ﻿using MyDelivery.Interfaces;
 using MyDelivery.Models;
+using System.Linq;
 
 namespace MyDelivery.Controllers
 {
@@ -22,7 +23,7 @@ namespace MyDelivery.Controllers
                 CityName = cityName,
                 AreaName = areaName,
                 PostCode = postCode,
-                Id = context.DeliveryAddresses.Count + 1,
+                Id = context.DeliveryAddresses.Max(s => s.Id) + 1,
                 BuyerId = buyerId
             };
             context.DeliveryAddresses.Add(deliveryAddress);
