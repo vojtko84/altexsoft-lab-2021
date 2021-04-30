@@ -93,7 +93,7 @@ namespace MyDelivery.Controllers
             var areaName = Console.ReadLine();
             Console.WriteLine("Enter PostCode");
             var postCode = Console.ReadLine();
-            var buyerId = ((Buyer)userController.User).Id;
+            var buyerId = userController.User.Id;
             var deliveryAddress = deliveryAddressController.AddDeliveryAddress(houseNumber, streetName, apartmentNumber, cityName, areaName, postCode, buyerId);
             orderController.AddOrder(buyerId, selectedProduct, deliveryAddress);
             Console.WriteLine("Order created");
@@ -130,7 +130,7 @@ namespace MyDelivery.Controllers
                 Console.Write("Incorrect input, enter number: ");
             }
 
-            var sellerId = ((Seller)userController.User).Id;
+            var sellerId = userController.User.Id;
             productController.AddProduct(name, description, categoryId, price, sellerId);
             Console.WriteLine("Product added");
         }

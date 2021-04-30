@@ -18,7 +18,7 @@ namespace MyDelivery.Controllers
         {
             var product = new Product
             {
-                Id = context.Products.Count + 1,
+                Id = context.Products.Max(s => s.Id) + 1,
                 Name = name,
                 Description = description,
                 CategoryId = categoryId,
@@ -36,12 +36,13 @@ namespace MyDelivery.Controllers
 
         public Product GetProduct(int id)
         {
-            return context.Products.ElementAt(id - 1);
+            return context.Products.Where(product => product.Id == id).FirstOrDefault();
         }
 
         public void DeleteProduct(int id)
         {
-            context.Products.RemoveAt(id - 1);
+            var productToRemove = context.Products.Where(product => product.Id == id).FirstOrDefault();
+            context.Products.Remove(productToRemove);
         }
     }
 }
