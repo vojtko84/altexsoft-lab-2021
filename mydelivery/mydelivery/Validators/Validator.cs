@@ -6,7 +6,7 @@ namespace MyDelivery.Validators
     {
         public static bool IsValidPhoneNumber(string phoneNumber)
         {
-            var pattern = @"^([+]38)?0[(]?\d{2}[)]?\s?\d{3}\s?\d{2}\s?\d{2}$";
+            var pattern = @"((^([+]380)[(]\d{2}[)])|(^([+]380)\d{2})|((^0)\d{2}))\s?\d{3}\s?\d{2}\s?\d{2}$";
             var regex = new Regex(pattern);
             return regex.IsMatch(phoneNumber);
         }
