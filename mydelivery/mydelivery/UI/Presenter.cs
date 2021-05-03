@@ -1,5 +1,6 @@
 ﻿using MyDelivery.Interfaces;
 using MyDelivery.Models;
+using MyDelivery.Validators;
 using System;
 
 namespace MyDelivery.Controllers
@@ -81,20 +82,18 @@ namespace MyDelivery.Controllers
             }
             var selectedProduct = productController.GetProduct(userChoise);
             Console.WriteLine("Please provide the shipping address");
-            Console.WriteLine("Enter house number");
-            var houseNumber = Console.ReadLine();
-            Console.WriteLine("Enter street name");
-            var streetName = Console.ReadLine();
-            Console.WriteLine("Enter apartment number");
-            var apartmentNumber = Console.ReadLine();
-            Console.WriteLine("Enter city name");
-            var cityName = Console.ReadLine();
-            Console.WriteLine("Enter area name");
-            var areaName = Console.ReadLine();
-            Console.WriteLine("Enter PostCode");
-            var postCode = Console.ReadLine();
-            var buyerId = userController.User.Id;
-            var deliveryAddress = deliveryAddressController.AddDeliveryAddress(houseNumber, streetName, apartmentNumber, cityName, areaName, postCode, buyerId);
+            string address;
+            do
+            {
+                address = Console.ReadLine();
+                if (!Validator.IsValidDeliveryAddres(address))
+                {
+                    Console.WriteLine("Incorect input");
+                    Console.Write("Re-enter the address: ");
+                }
+            } while (!Validator.IsValidDeliveryAddres(address));            
+            var buyerId = userController.User.Id;            
+            var deliveryAddress = deliveryAddressController.AddDeliveryAddress(address, buyerId);
             orderController.AddOrder(buyerId, selectedProduct, deliveryAddress);
             Console.WriteLine("Order created");
         }
