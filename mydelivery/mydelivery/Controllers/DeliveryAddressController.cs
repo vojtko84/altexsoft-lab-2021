@@ -30,5 +30,23 @@ namespace MyDelivery.Controllers
             context.Save();
             return deliveryAddress;
         }
+
+        public DeliveryAddress AddDeliveryAddress(string address, int buyerId)
+        {
+            var deliveryAddress = new DeliveryAddress();
+            deliveryAddress.BuyerId = buyerId;
+            deliveryAddress.Id = context.DeliveryAddresses.Max(s => s.Id) + 1;
+            string[] separators = { ".", ",", " ", };
+            var parsedAddress = address.Trim().Split(separators, System.StringSplitOptions.RemoveEmptyEntries);
+            deliveryAddress.StreetName = parsedAddress[1];
+            deliveryAddress.HouseNumber = parsedAddress[3];
+            if (parsedAddress.Length < 4)
+            {
+                deliveryAddress.ApartmentNumber = parsedAddress[5];
+            }
+            context.DeliveryAddresses.Add(deliveryAddress);
+            context.Save();
+            return deliveryAddress;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MyDelivery.Interfaces;
 using MyDelivery.Models;
+using MyDelivery.Validators;
 using System;
 
 namespace MyDelivery.Controllers
@@ -30,6 +31,7 @@ namespace MyDelivery.Controllers
 
         private void ShowMainMenu()
         {
+            Console.Clear();
             Console.WriteLine("Hello, select user\n1. Buyer\n2. Seller\n3. Admin");
             var selectedUser = Console.ReadLine();
             userController.User = userController.SelectUserType(selectedUser);
@@ -80,21 +82,23 @@ namespace MyDelivery.Controllers
                 Console.Write("Incorrect input, enter number: ");
             }
             var selectedProduct = productController.GetProduct(userChoise);
-            Console.WriteLine("Please provide the shipping address");
-            Console.WriteLine("Enter house number");
-            var houseNumber = Console.ReadLine();
-            Console.WriteLine("Enter street name");
-            var streetName = Console.ReadLine();
-            Console.WriteLine("Enter apartment number");
-            var apartmentNumber = Console.ReadLine();
-            Console.WriteLine("Enter city name");
-            var cityName = Console.ReadLine();
-            Console.WriteLine("Enter area name");
-            var areaName = Console.ReadLine();
-            Console.WriteLine("Enter PostCode");
-            var postCode = Console.ReadLine();
-            var buyerId = userController.User.Id;
-            var deliveryAddress = deliveryAddressController.AddDeliveryAddress(houseNumber, streetName, apartmentNumber, cityName, areaName, postCode, buyerId);
+            Console.WriteLine("Specify the delivery address or enter 'Q' to exit to the main menu");
+            string address;
+            do
+            {                
+                address = Console.ReadLine();
+                if (address.ToUpper() == "Q")
+                {
+                    ShowMainMenu();
+                }
+                if (!Validator.IsValidDeliveryAddres(address))
+                {
+                    Console.WriteLine("Incorect input");
+                    Console.Write("Re-enter the address or enter 'Q' to exit to the main menu: ");
+                }
+            } while (!Validator.IsValidDeliveryAddres(address));            
+            var buyerId = userController.User.Id;            
+            var deliveryAddress = deliveryAddressController.AddDeliveryAddress(address, buyerId);
             orderController.AddOrder(buyerId, selectedProduct, deliveryAddress);
             Console.WriteLine("Order created");
         }
