@@ -31,6 +31,7 @@ namespace MyDelivery.Controllers
 
         private void ShowMainMenu()
         {
+            Console.Clear();
             Console.WriteLine("Hello, select user\n1. Buyer\n2. Seller\n3. Admin");
             var selectedUser = Console.ReadLine();
             userController.User = userController.SelectUserType(selectedUser);
@@ -81,15 +82,19 @@ namespace MyDelivery.Controllers
                 Console.Write("Incorrect input, enter number: ");
             }
             var selectedProduct = productController.GetProduct(userChoise);
-            Console.WriteLine("Please provide the shipping address");
+            Console.WriteLine("Specify the delivery address or enter 'Q' to exit to the main menu");
             string address;
             do
-            {
+            {                
                 address = Console.ReadLine();
+                if (address.ToUpper() == "Q")
+                {
+                    ShowMainMenu();
+                }
                 if (!Validator.IsValidDeliveryAddres(address))
                 {
                     Console.WriteLine("Incorect input");
-                    Console.Write("Re-enter the address: ");
+                    Console.Write("Re-enter the address or enter 'Q' to exit to the main menu: ");
                 }
             } while (!Validator.IsValidDeliveryAddres(address));            
             var buyerId = userController.User.Id;            
