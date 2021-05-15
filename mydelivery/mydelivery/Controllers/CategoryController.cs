@@ -8,10 +8,12 @@ namespace MyDelivery.Controllers
     public class CategoryController : ICategoryController
     {
         private readonly IContext context;
+        private readonly ILogger logger;
 
-        public CategoryController(IContext context)
+        public CategoryController(IContext context, ILogger logger)
         {
             this.context = context;
+            this.logger = logger;
         }
 
         public IList<Category> GetCategories()
@@ -28,6 +30,7 @@ namespace MyDelivery.Controllers
             };
             context.Categories.Add(category);
             context.Save();
+            logger.SaveIntoFile($"Added category {category.Name}");
         }
     }
 }
