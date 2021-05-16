@@ -85,19 +85,23 @@ namespace MyDelivery.Controllers
             Console.WriteLine("Specify the delivery address or enter 'Q' to exit to the main menu");
             string address;
             do
-            {                
+            {
                 address = Console.ReadLine();
                 if (address.ToUpper() == "Q")
                 {
-                    ShowMainMenu();
+                    break;
                 }
                 if (!Validator.IsValidDeliveryAddres(address))
                 {
                     Console.WriteLine("Incorect input");
                     Console.Write("Re-enter the address or enter 'Q' to exit to the main menu: ");
                 }
-            } while (!Validator.IsValidDeliveryAddres(address));            
-            var buyerId = userController.User.Id;            
+            } while (!Validator.IsValidDeliveryAddres(address));
+            if (address.ToUpper() == "Q")
+            {
+                return;
+            }
+            var buyerId = userController.User.Id;
             var deliveryAddress = deliveryAddressController.AddDeliveryAddress(address, buyerId);
             orderController.AddOrder(buyerId, selectedProduct, deliveryAddress);
             Console.WriteLine("Order created");

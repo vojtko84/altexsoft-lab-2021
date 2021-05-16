@@ -7,10 +7,12 @@ namespace MyDelivery.Controllers
     public class DeliveryAddressController : IDeliveryAddressController
     {
         private readonly IContext context;
+        private readonly ILogger logger;
 
-        public DeliveryAddressController(IContext context)
+        public DeliveryAddressController(IContext context, ILogger logger)
         {
             this.context = context;
+            this.logger = logger;
         }
 
         public DeliveryAddress AddDeliveryAddress(string houseNumber, string streetName, string apartmentNumber, string cityName, string areaName, string postCode, int buyerId)
@@ -28,6 +30,7 @@ namespace MyDelivery.Controllers
             };
             context.DeliveryAddresses.Add(deliveryAddress);
             context.Save();
+            logger.SaveIntoFile($"Added delivery address ID: {deliveryAddress.Id}");
             return deliveryAddress;
         }
 
@@ -46,6 +49,7 @@ namespace MyDelivery.Controllers
             }
             context.DeliveryAddresses.Add(deliveryAddress);
             context.Save();
+            logger.SaveIntoFile($"Added delivery address ID: {deliveryAddress.Id}");
             return deliveryAddress;
         }
     }

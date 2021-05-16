@@ -8,10 +8,12 @@ namespace MyDelivery.Controllers
     public class ProductController : IProductController
     {
         private readonly IContext context;
+        private readonly ILogger logger;
 
-        public ProductController(IContext context)
+        public ProductController(IContext context, ILogger logger)
         {
             this.context = context;
+            this.logger = logger;
         }
 
         public void AddProduct(string name, string description, int categoryId, decimal price, int sellerId)
@@ -27,6 +29,7 @@ namespace MyDelivery.Controllers
             };
             context.Products.Add(product);
             context.Save();
+            logger.SaveIntoFile($"Added product ID: {product.Id}");
         }
 
         public IList<Product> GetProducts()
@@ -42,6 +45,7 @@ namespace MyDelivery.Controllers
         public void DeleteProduct(int id)
         {
             context.Products.Remove(GetProduct(id));
+            logger.SaveIntoFile($"Deleted product ID: {id}");
         }
     }
 }
