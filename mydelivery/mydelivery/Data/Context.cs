@@ -6,6 +6,7 @@ namespace MyDelivery.Data
 {
     public class Context : IContext
     {
+        private readonly IDataManager dataManager;
         public IList<Product> Products { get; set; }
         public IList<Buyer> Buyers { get; set; }
         public IList<Seller> Sellers { get; set; }
@@ -20,24 +21,25 @@ namespace MyDelivery.Data
         private readonly string deliveryAddresFileName = "delivery.json";
         private readonly string orderFileName = "order.json";
 
-        public Context()
+        public Context(IDataManager dataManager)
         {
-            Products = JsonManager.Load<Product>(productFileName);
-            Buyers = JsonManager.Load<Buyer>(buyerFileName);
-            Sellers = JsonManager.Load<Seller>(sellerFileName);
-            Categories = JsonManager.Load<Category>(categoryFileName);
-            DeliveryAddresses = JsonManager.Load<DeliveryAddress>(deliveryAddresFileName);
-            Orders = JsonManager.Load<Order>(orderFileName);
+            this.dataManager = dataManager;
+            Products = dataManager.Load<Product>(productFileName);
+            Buyers = dataManager.Load<Buyer>(buyerFileName);
+            Sellers = dataManager.Load<Seller>(sellerFileName);
+            Categories = dataManager.Load<Category>(categoryFileName);
+            DeliveryAddresses = dataManager.Load<DeliveryAddress>(deliveryAddresFileName);
+            Orders = dataManager.Load<Order>(orderFileName);
         }
 
         public void Save()
         {
-            JsonManager.Save(Products, productFileName);
-            JsonManager.Save(Buyers, buyerFileName);
-            JsonManager.Save(Sellers, sellerFileName);
-            JsonManager.Save(Categories, categoryFileName);
-            JsonManager.Save(DeliveryAddresses, deliveryAddresFileName);
-            JsonManager.Save(Orders, orderFileName);
+            dataManager.Save(Products, productFileName);
+            dataManager.Save(Buyers, buyerFileName);
+            dataManager.Save(Sellers, sellerFileName);
+            dataManager.Save(Categories, categoryFileName);
+            dataManager.Save(DeliveryAddresses, deliveryAddresFileName);
+            dataManager.Save(Orders, orderFileName);
         }
     }
 }

@@ -8,7 +8,8 @@ namespace MyDelivery
     {
         private static void Main(string[] args)
         {
-            var context = new Context();
+            var dataManager = new JsonManager();
+            var context = new Context(dataManager);
             var logger = new Logger();
             var userController = new UserController();
             var productController = new ProductController(context, logger);
