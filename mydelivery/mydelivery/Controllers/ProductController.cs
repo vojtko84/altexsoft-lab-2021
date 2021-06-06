@@ -9,11 +9,13 @@ namespace MyDelivery.Controllers
     {
         private readonly IContext context;
         private readonly ILogger logger;
+        private readonly ICache cache;
 
-        public ProductController(IContext context, ILogger logger)
+        public ProductController(IContext context, ILogger logger, ICache cache)
         {
             this.context = context;
             this.logger = logger;
+            this.cache = cache;
         }
 
         public void AddProduct(string name, string description, int categoryId, decimal price, int sellerId)
@@ -29,6 +31,7 @@ namespace MyDelivery.Controllers
             };
             context.Products.Add(product);
             context.Save();
+            cache.Add<Product>(product.Id, product);
             logger.SaveIntoFile($"Added product ID: {product.Id}");
         }
 
@@ -39,7 +42,7 @@ namespace MyDelivery.Controllers
 
         public Product GetProduct(int id)
         {
-            return context.Products.Where(product => product.Id == id).FirstOrDefault();
+            return cache.GetOrCreate<Product>(id, () => context.Products.FirstOrDefault(product => product.Id == id));
         }
 
         public void DeleteProduct(int id)

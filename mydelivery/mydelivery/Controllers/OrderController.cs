@@ -8,11 +8,13 @@ namespace MyDelivery.Controllers
     {
         private readonly IContext context;
         private readonly ILogger logger;
+        private readonly ICache cache;
 
-        public OrderController(IContext context, ILogger logger)
+        public OrderController(IContext context, ILogger logger, ICache cache)
         {
             this.context = context;
             this.logger = logger;
+            this.cache = cache;
         }
 
         public void AddOrder(int buyerId, Product product, DeliveryAddress deliveryAddress)
@@ -27,6 +29,7 @@ namespace MyDelivery.Controllers
             order.DeliveryAddress = deliveryAddress;
             context.Orders.Add(order);
             context.Save();
+            cache.Add<Order>(order.Id, order);
             logger.SaveIntoFile($"Added order ID: {order.Id}");
         }
     }
