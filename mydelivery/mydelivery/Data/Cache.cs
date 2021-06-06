@@ -32,7 +32,7 @@ namespace MyDelivery.Data
 
                 if (cache[type.ToString()].Count > CacheSize)
                 {
-                    var keyToDelete = cachePosition[type.ToString()].FirstOrDefault(x => x.Value == cachePosition[type.ToString()].Min(x => x.Value)).Key;                    
+                    var keyToDelete = cachePosition[type.ToString()].FirstOrDefault(x => x.Value == cachePosition[type.ToString()].Min(x => x.Value)).Key;
                     cache[type.ToString()].Remove(keyToDelete);
                     cachePosition[type.ToString()].Remove(keyToDelete);
                 }
@@ -65,7 +65,15 @@ namespace MyDelivery.Data
                 if (!cache[type.ToString()].ContainsKey(key))
                 {
                     cache[type.ToString()][key] = createItem();
-                    cachePosition[type.ToString()][key] = 1;
+
+                    if (cachePosition[type.ToString()].Count == 0)
+                    {
+                        cachePosition[type.ToString()].Add(key, 1);
+                    }
+                    else
+                    {
+                        cachePosition[type.ToString()].Add(key, cachePosition[type.ToString()].Max(x => x.Value) + 1);
+                    }
                 }
 
                 T result = (T)cache[type.ToString()][key];
