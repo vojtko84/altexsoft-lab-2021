@@ -8,11 +8,13 @@ namespace MyDelivery.Controllers
     {
         private readonly IContext context;
         private readonly ILogger logger;
+        private readonly ICache cache;
 
-        public DeliveryAddressController(IContext context, ILogger logger)
+        public DeliveryAddressController(IContext context, ILogger logger, ICache cache)
         {
             this.context = context;
             this.logger = logger;
+            this.cache = cache;
         }
 
         public DeliveryAddress AddDeliveryAddress(string houseNumber, string streetName, string apartmentNumber, string cityName, string areaName, string postCode, int buyerId)
@@ -30,6 +32,7 @@ namespace MyDelivery.Controllers
             };
             context.DeliveryAddresses.Add(deliveryAddress);
             context.Save();
+            cache.Add<DeliveryAddress>(deliveryAddress.Id, deliveryAddress);
             logger.SaveIntoFile($"Added delivery address ID: {deliveryAddress.Id}");
             return deliveryAddress;
         }
@@ -49,6 +52,7 @@ namespace MyDelivery.Controllers
             }
             context.DeliveryAddresses.Add(deliveryAddress);
             context.Save();
+            cache.Add<DeliveryAddress>(deliveryAddress.Id, deliveryAddress);
             logger.SaveIntoFile($"Added delivery address ID: {deliveryAddress.Id}");
             return deliveryAddress;
         }
