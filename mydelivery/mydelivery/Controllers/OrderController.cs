@@ -1,4 +1,5 @@
-﻿using MyDelivery.Interfaces;
+﻿using MyDelivery.Enums;
+using MyDelivery.Interfaces;
 using MyDelivery.Models;
 using System.Linq;
 using System.Threading.Tasks;
@@ -44,7 +45,7 @@ namespace MyDelivery.Controllers
             {
                 totalPrice += product.Price;
             }
-            return priceController.RecalculatePriceInAnotherCurrencyAsync(Data.Enums.CurrencyName.USD, totalPrice);
+            return priceController.GetPriceForCurrency(CurrencyNames.USD, totalPrice);
         }
     }
 }

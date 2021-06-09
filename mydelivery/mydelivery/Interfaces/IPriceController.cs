@@ -1,10 +1,10 @@
-﻿using MyDelivery.Data;
+﻿using MyDelivery.Enums;
 using System.Threading.Tasks;
 
 namespace MyDelivery.Interfaces
 {
     public interface IPriceController
     {
-        Task<decimal> RecalculatePriceInAnotherCurrencyAsync(Enums.CurrencyName currencyName, decimal price);
+        Task<decimal> GetPriceForCurrency(CurrencyNames currencyName, decimal price);
     }
 }
