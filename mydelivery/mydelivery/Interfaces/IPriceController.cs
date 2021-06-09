@@ -5,6 +5,6 @@ namespace MyDelivery.Interfaces
 {
     public interface IPriceController
     {
-        public Task<decimal> RecalculatePriceInAnotherCurrencyAsync(Enums.CurrencyName currencyName, decimal price);
+        Task<decimal> RecalculatePriceInAnotherCurrencyAsync(Enums.CurrencyName currencyName, decimal price);
     }
 }

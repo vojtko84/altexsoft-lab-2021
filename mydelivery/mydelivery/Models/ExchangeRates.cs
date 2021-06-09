@@ -5,7 +5,6 @@ namespace MyDelivery.Models
 {
     public class ExchangeRates
     {
-        [JsonPropertyName("exchangeRate")]
-        public List<ExchangeRate> ExcangeRates { get; set; }
+        public IEnumerable<ExchangeRate> ExchangeRate { get; set; }
     }
 }

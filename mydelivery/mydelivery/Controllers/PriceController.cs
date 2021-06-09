@@ -11,8 +11,6 @@ namespace MyDelivery.Controllers
 {
     public class PriceController : IPriceController
     {
-        private ExchangeRates exchangeRates;
-
         public async Task<decimal> RecalculatePriceInAnotherCurrencyAsync(Enums.CurrencyName currencyName, decimal price)
         {
             return price / await GetCurrencySaleRateAsync(currencyName);
@@ -25,8 +23,8 @@ namespace MyDelivery.Controllers
             var request = new HttpRequestMessage(HttpMethod.Get,
                 $"https://api.privatbank.ua/p24api/exchange_rates?json&date={date}");
             var response = await client.SendAsync(request).ConfigureAwait(false);
-            exchangeRates = JsonSerializer.Deserialize<ExchangeRates>(await response.Content.ReadAsStringAsync());
-            var currentCurrency = exchangeRates.ExcangeRates.FirstOrDefault(x => x.Currency == currencyName.ToString());
+            var exchangeRates = JsonSerializer.Deserialize<ExchangeRates>(await response.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true });
+            var currentCurrency = exchangeRates.ExchangeRate.FirstOrDefault(x => x.Currency == currencyName.ToString());
 
             return currentCurrency.SaleRate;
         }
