@@ -2,6 +2,7 @@
 using MyDelivery.Models;
 using MyDelivery.Validators;
 using System;
+using System.Threading.Tasks;
 
 namespace MyDelivery.Controllers
 {
@@ -24,12 +25,12 @@ namespace MyDelivery.Controllers
             this.orderController = orderController;
         }
 
-        public void Run()
+        public async Task Run()
         {
-            ShowMainMenu();
+            await ShowMainMenu();
         }
 
-        private void ShowMainMenu()
+        private async Task ShowMainMenu()
         {
             Console.Clear();
             Console.WriteLine("Hello, select user\n1. Buyer\n2. Seller\n3. Admin");
@@ -38,7 +39,7 @@ namespace MyDelivery.Controllers
             switch (userController.User)
             {
                 case Buyer:
-                    RunBuyersScript();
+                    await RunBuyersScript();
                     break;
 
                 case Seller:
@@ -55,7 +56,7 @@ namespace MyDelivery.Controllers
             }
         }
 
-        private void RunBuyersScript()
+        private async Task RunBuyersScript()
         {
             Console.Clear();
             Console.WriteLine("1. View product list\n2. Create order.");
@@ -67,11 +68,11 @@ namespace MyDelivery.Controllers
 
             if (userChoice == "2")
             {
-                CreateOrder();
+                await CreateOrder();
             }
         }
 
-        private void CreateOrder()
+        private async Task CreateOrder()
         {
             Console.Clear();
             Console.WriteLine("Choose a product");
@@ -103,8 +104,10 @@ namespace MyDelivery.Controllers
             }
             var buyerId = userController.User.Id;
             var deliveryAddress = deliveryAddressController.AddDeliveryAddress(address, buyerId);
-            orderController.AddOrder(buyerId, selectedProduct, deliveryAddress);
+            var order = orderController.AddOrder(buyerId, selectedProduct, deliveryAddress);
             Console.WriteLine("Order created");
+            var priceInUSD = await orderController.GetRecalculatePriceInUSD(order);
+            Console.WriteLine($"Order price in dollars: {priceInUSD:0.00}");
         }
 
         private void ShowProducts()
