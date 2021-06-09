@@ -24,7 +24,6 @@ namespace MyDelivery.Controllers
             var client = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Get,
                 $"https://api.privatbank.ua/p24api/exchange_rates?json&date={date}");
-
             var response = await client.SendAsync(request).ConfigureAwait(false);
             exchangeRates = JsonSerializer.Deserialize<ExchangeRates>(await response.Content.ReadAsStringAsync());
             var currentCurrency = exchangeRates.ExcangeRates.FirstOrDefault(x => x.Currency == currencyName.ToString());

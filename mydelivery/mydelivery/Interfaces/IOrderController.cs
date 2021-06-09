@@ -6,7 +6,6 @@ namespace MyDelivery.Interfaces
     public interface IOrderController
     {
         Order AddOrder(int buyerId, Product product, DeliveryAddress deliveryAddress);
-
-        public Task<decimal> GetRecalculatePriceInUSD(Order order);
+        Task<decimal> GetRecalculatePriceInUSD(Order order);
     }
 }
