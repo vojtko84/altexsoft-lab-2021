@@ -1,0 +1,30 @@
+﻿CREATE PROC sp_mergeBuyerXML (@request XML, @xmlDoc INT)
+AS
+BEGIN
+
+CREATE TABLE #TempTable
+(BuyerID INT,
+FirstName NVARCHAR(50),
+LastName NVARCHAR(50),
+PhoneNumber NVARCHAR(50))
+INSERT INTO #TempTable
+SELECT * FROM
+OPENXML (@xmlDoc, '/Buyers/Buyer', 2)
+WITH
+(BuyerID INT,
+FirstName NVARCHAR(50),
+LastName NVARCHAR(50),
+PhoneNumber NVARCHAR(50))
+
+SELECT * FROM #TempTable
+
+MERGE Buyers AS TERGET
+USING #TempTable AS SOURCE
+ON (TERGET.BuyerID = SOURCE.BuyerID)
+WHEN MATCHED
+THEN UPDATE SET LastName = SOURCE.LastName
+WHEN NOT MATCHED
+THEN INSERT VALUES(SOURCE.BuyerID,SOURCE.FirstName, SOURCE.LastName, SOURCE.PhoneNumber);
+
+DROP TABLE #TempTable
+END
