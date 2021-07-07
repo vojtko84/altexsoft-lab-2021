@@ -1,0 +1,5 @@
+﻿CREATE PROC sp_createID (@tableName VARCHAR(50), @ID VARCHAR(50) OUTPUT)
+AS
+BEGIN
+SELECT @ID = @tableName + CAST(NEWID() AS VARCHAR(50))
+END
