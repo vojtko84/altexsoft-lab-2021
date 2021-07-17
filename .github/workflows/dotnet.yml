@@ -18,6 +18,6 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore "EF/EntityFramework/Delivery/Delivery.sln"
+      run: dotnet restore "EF/Task1_CreateModels/EntityFramework/Delivery/Delivery.sln"
     - name: Build
-      run: dotnet build "EF/EntityFramework/Delivery/Delivery.sln" --no-restore    
+      run: dotnet build "EF/Task1_CreateModels/EntityFramework/Delivery/Delivery.sl" --no-restore    
