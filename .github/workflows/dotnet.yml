@@ -20,4 +20,4 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore "EntityFramework/Delivery/Delivery.sln"
     - name: Build
-      run: dotnet build "EntityFramework/Delivery/Delivery.sl" --no-restore    
+      run: dotnet build "EntityFramework/Delivery/Delivery.sln" --no-restore    
