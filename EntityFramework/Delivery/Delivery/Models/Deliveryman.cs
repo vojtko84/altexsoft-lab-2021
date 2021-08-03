@@ -1,6 +1,6 @@
 ﻿namespace Delivery.Models
 {
-    public class Deliveryman : BaseModel
+    public class DeliveryMan : BaseModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
