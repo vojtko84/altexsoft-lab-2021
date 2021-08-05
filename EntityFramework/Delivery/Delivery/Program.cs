@@ -1,6 +1,5 @@
-﻿using System;
-using Delivery.Data;
-using Delivery.LinqQueries;
+﻿using System.IO;
+using Microsoft.Extensions.Configuration;
 
 namespace Delivery
 {
@@ -8,15 +7,14 @@ namespace Delivery
     {
         private static void Main(string[] args)
         {
-            var context = new TestContext();
-            var task2Linq = new Task2Linq(context);
-            task2Linq.Task1();
-            task2Linq.Task2();
-            task2Linq.Task3();
-            task2Linq.Task4();
-            task2Linq.Task5();
+        }
 
-            Console.ReadKey();
+        private static IConfigurationRoot Initialize()
+        {
+            var bilder = new ConfigurationBuilder().
+                SetBasePath(Directory.GetCurrentDirectory()).
+                AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            return bilder.Build();
         }
     }
 }
