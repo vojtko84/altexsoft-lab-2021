@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Delivery.Data;
 using Delivery.Models;
@@ -15,23 +14,14 @@ namespace Delivery.LinqQueries
             _context = context;
         }
 
-        public void Task1()
+        public List<Product> Task1()
         {
-            Console.WriteLine(new string('-', 30));
-            Console.WriteLine("Task1:");
-            Console.WriteLine(new string('-', 30));
-            var sortProducts = _context.Products.OrderBy(p => p.Name).Select(p => p.Name);
-            foreach (var item in sortProducts)
-            {
-                Console.WriteLine($"- {item}");
-            }
+            var sortedProducts = _context.Products.OrderBy(p => p.Name).ToList();
+            return sortedProducts;
         }
 
-        public void Task2()
+        public List<(string ProviderName, string ProductName)> Task2()
         {
-            Console.WriteLine(new string('-', 30));
-            Console.WriteLine("Task2:");
-            Console.WriteLine(new string('-', 30));
             var providerProducts = _context.Products.Join(_context.Providers,
                                                           p => p.ProviderId,
                                                           pr => pr.Id,
@@ -40,64 +30,59 @@ namespace Delivery.LinqQueries
                                                               ProviderName = pr.Name,
                                                               ProductName = p.Name,
                                                           });
-            foreach (var item in providerProducts)
-            {
-                Console.WriteLine($"- Provider: {item.ProviderName} | Product: {item.ProductName}");
-            }
+            return providerProducts.Select(p => (ProviderName: p.ProviderName, ProductName: p.ProductName)).ToList();
         }
 
-        public void Task3()
+        public List<(Category Category, int ProductsCount)> Task3()
         {
-            Console.WriteLine(new string('-', 30));
-            Console.WriteLine("Task3:");
-            Console.WriteLine(new string('-', 30));
             var categories = _context.Categories.GroupJoin(_context.Products,
                                                            c => c.Id,
                                                            p => p.CategoryId,
                                                            (c, p) => new
                                                            {
-                                                               CategoryName = c.Name,
+                                                               Category = c,
                                                                ProductsCount = p.Count()
                                                            });
-            foreach (var item in categories)
-            {
-                Console.WriteLine($"Categoy: {item.CategoryName}\nProduct quantity: {item.ProductsCount}\n");
-            }
+            return categories.Select(c => (Category: c.Category, ProductsCount: c.ProductsCount)).ToList();
         }
 
-        public void Task4()
+        public List<Category> Task3_1()
         {
-            Console.WriteLine(new string('-', 30));
-            Console.WriteLine("Task4:");
-            Console.WriteLine(new string('-', 30));
+            var categories = _context.Categories.GroupJoin(_context.Products,
+                                                           c => c.Id,
+                                                           p => p.CategoryId,
+                                                           (c, p) => new Category() { Id = c.Id, Name = c.Name, Products = p.ToList() }
+                                                           );
+            return categories.ToList();
+        }
+
+        public List<Provider> Task4()
+        {
             var providers = _context.Providers.GroupJoin(_context.Products,
                                                          prv => prv.Id,
                                                          prd => prd.ProviderId,
                                                          (prv, prd) => new
                                                          {
-                                                             ProviderName = prv.Name,
+                                                             Provider = prv,
                                                              ProductsCount = prd.Count()
-                                                         }).OrderByDescending(c => c.ProductsCount);
-            foreach (var item in providers)
-            {
-                Console.WriteLine($"Provider: {item.ProviderName}\nProduct quantity: {item.ProductsCount}\n");
-            }
+                                                         }).OrderByDescending(c => c.ProductsCount)
+                                                         .Select(p => p.Provider).ToList();
+            return providers;
         }
 
-        public void Task5()
+        public List<Product> Task5_1()
         {
-            Console.WriteLine(new string('-', 30));
-            Console.WriteLine("Task5:");
-            Console.WriteLine(new string('-', 30));
             var products1 = _context.Products.Where(p => p.ProviderId == 1);
             var products2 = _context.Products.Where(p => p.ProviderId == 2);
-            var similarProducts = products1.Intersect(products2, new ProductComparer()).ToList();
-            Console.WriteLine("Similar products:");
-            foreach (var item in similarProducts)
-            {
-                Console.WriteLine($"- {item.Name}");
-            }
+            var similarProducts = products1.Intersect(products2, new ProductComparer());
 
+            return similarProducts.ToList();
+        }
+
+        public List<(Product Product, Provider Provider)> Task5_2()
+        {
+            var products1 = _context.Products.Where(p => p.ProviderId == 1);
+            var products2 = _context.Products.Where(p => p.ProviderId == 2);
             var uniqueProducts1 = products1.Except(products2, new ProductComparer()).ToList();
             var uniqueProducts2 = products2.Except(products1, new ProductComparer()).ToList();
             var uniqueProducsTotal = new List<Product>();
@@ -108,14 +93,11 @@ namespace Delivery.LinqQueries
                                                         pr => pr.Id,
                                                         (p, pr) => new
                                                         {
-                                                            ProviderName = pr.Name,
-                                                            ProductName = p.Name,
+                                                            Provider = pr,
+                                                            Product = p,
                                                         });
-            Console.WriteLine("\nUnique products:");
-            foreach (var item in providerProducts)
-            {
-                Console.WriteLine($"- {item.ProductName} | {item.ProviderName}");
-            }
+
+            return providerProducts.Select(p => (Product: p.Product, Provider: p.Provider)).ToList();
         }
     }
 }
