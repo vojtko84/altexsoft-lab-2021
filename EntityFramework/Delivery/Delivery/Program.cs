@@ -11,10 +11,10 @@ namespace Delivery
 
         private static IConfigurationRoot Initialize()
         {
-            var bilder = new ConfigurationBuilder().
+            var builder = new ConfigurationBuilder().
                 SetBasePath(Directory.GetCurrentDirectory()).
                 AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            return bilder.Build();
+            return builder.Build();
         }
     }
 }

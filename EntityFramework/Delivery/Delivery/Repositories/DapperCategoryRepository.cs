@@ -7,20 +7,20 @@ using Delivery.Models;
 
 namespace Delivery.Repositories
 {
-    public class DapperRepository : IRepository
+    public class DapperCategoryRepository : IRepository
     {
-        private readonly IDbConnection db;
+        private readonly IDbConnection _db;
 
-        public DapperRepository(string connectionString)
+        public DapperCategoryRepository(string connectionString)
         {
-            db = new SqlConnection(connectionString);
+            _db = new SqlConnection(connectionString);
         }
 
         public int AddCategory(Category category)
         {
             var sql = "INSERT INTO [dbo].[Categories] ([Name]) VALUES (@Name)";
-            var affectedRows = db.Execute(sql, category);
-            var categories = db.Query<Category>($"SELECT * FROM [dbo].[Categories] WHERE Name = '{category.Name}'").ToList();
+            var affectedRows = _db.Execute(sql, category);
+            var categories = _db.Query<Category>($"SELECT * FROM [dbo].[Categories] WHERE Name = '{category.Name}'").ToList();
             var id = categories.LastOrDefault().Id;
             return id;
         }
@@ -29,23 +29,22 @@ namespace Delivery.Repositories
         {
             var sql = "INSERT INTO [dbo].[Products] ([Name], [Description], [Price], [CategoryId], [ProviderId]) VALUES (@Name, @Description, @Price, @CategoryId, @ProviderId)";
             AddCategory(category);
-            var categories = db.Query<Category>($"SELECT * FROM [dbo].[Categories] WHERE Name = '{category.Name}'").ToList();
-            var id = categories.LastOrDefault().Id;
+            var categoryId = _db.Query<int>($"SELECT Max(Id) FROM [dbo].[Categories]").FirstOrDefault();
             if (category.Products.Count != 0)
             {
                 foreach (var product in category.Products)
                 {
-                    product.CategoryId = id;
-                    var affectedRows = db.Execute(sql, product);
+                    product.CategoryId = categoryId;
+                    var affectedRows = _db.Execute(sql, product);
                 }
             }
-            return id;
+            return categoryId;
         }
 
         public bool DeleteCategory(int id)
         {
             var sql = "DELETE FROM [dbo].[Categories] WHERE Id = @Id";
-            var affectedRows = db.Execute(sql, new { Id = id });
+            var affectedRows = _db.Execute(sql, new { Id = id });
             return affectedRows > 0;
         }
 
@@ -56,7 +55,7 @@ namespace Delivery.Repositories
 
             foreach (var product in category.Products)
             {
-                var affectedRows = db.Execute(sql, new { Id = product.Id });
+                var affectedRows = _db.Execute(sql, new { Id = product.Id });
             }
             return DeleteCategory(id);
         }
@@ -64,14 +63,14 @@ namespace Delivery.Repositories
         public Category GetCategoryById(int id)
         {
             var sql = "SELECT * FROM [dbo].[Categories] WHERE Id = @Id";
-            return db.Query<Category>(sql, new { Id = id }).SingleOrDefault();
+            return _db.Query<Category>(sql, new { Id = id }).SingleOrDefault();
         }
 
         public Category GetCategoryByIdWithObjects(int id)
         {
             var sql = "SELECT * FROM [dbo].[Categories] LEFT JOIN [dbo].[Products] ON [dbo].[Categories].Id = [dbo].[Products].CategoryId WHERE [dbo].[Categories].Id = @Id";
             var dictionary = new Dictionary<int, Category>();
-            var multires = db.Query<Category, Product, Category>(sql, (category, product) =>
+            var multires = _db.Query<Category, Product, Category>(sql, (category, product) =>
                                                                 {
                                                                     if (!dictionary.TryGetValue(category.Id, out Category cat))
                                                                     {
@@ -91,14 +90,14 @@ namespace Delivery.Repositories
         public List<Category> GetCategories()
         {
             var sql = "SELECT* FROM [dbo].[Categories]";
-            return db.Query<Category>(sql).ToList();
+            return _db.Query<Category>(sql).ToList();
         }
 
         public List<Category> GetCategoriesWithObjects()
         {
             var sql = "SELECT * FROM [dbo].[Categories] LEFT JOIN [dbo].[Products] ON [dbo].[Categories].Id = [dbo].[Products].CategoryId";
             var dictionary = new Dictionary<int, Category>();
-            var multires = db.Query<Category, Product, Category>(sql, (category, product) =>
+            var multires = _db.Query<Category, Product, Category>(sql, (category, product) =>
                                                             {
                                                                 if (!dictionary.TryGetValue(category.Id, out Category cat))
                                                                 {
@@ -117,7 +116,7 @@ namespace Delivery.Repositories
         public bool UpdateCategory(Category category)
         {
             var sql = "UPDATE [dbo].[Categories] SET Name = @Name WHERE Id = @Id";
-            var affectedRows = db.Execute(sql, category);
+            var affectedRows = _db.Execute(sql, category);
             return affectedRows > 0;
         }
     }

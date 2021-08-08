@@ -7,38 +7,39 @@ using Delivery.Models;
 
 namespace Delivery.Repositories
 {
-    public class DapperContribRepository : IRepository
+    public class DapperContribCategoryRepository : IRepository
     {
-        private readonly IDbConnection db;
+        private readonly IDbConnection _db;
 
-        public DapperContribRepository(string connectionString)
+        public DapperContribCategoryRepository(string connectionString)
         {
-            db = new SqlConnection(connectionString);
+            _db = new SqlConnection(connectionString);
         }
 
         public int AddCategory(Category category)
         {
-            var newCategory = db.Insert<Category>(category);
+            var newCategory = _db.Insert<Category>(category);
             return (int)newCategory;
         }
 
         public int AddCategoryWithObjects(Category category)
         {
-            var newCategory = db.Insert<Category>(category);
-            if (category.Products.Count != 0)
-
+            var newCategory = _db.Insert<Category>(category);
+            if (category.Products != null)
+            {
                 foreach (var product in category.Products)
                 {
                     product.CategoryId = (int)newCategory;
+                    var products = _db.Insert(category.Products);
                 }
-            var products = db.Insert(category.Products);
+            }
 
             return (int)newCategory;
         }
 
         public bool DeleteCategory(int id)
         {
-            var isSuccess = db.Delete(new Category { Id = id });
+            var isSuccess = _db.Delete(new Category { Id = id });
             return isSuccess;
         }
 
@@ -49,22 +50,22 @@ namespace Delivery.Repositories
             {
                 foreach (var product in category.Products)
                 {
-                    db.Delete(new Product { Id = product.Id });
+                    _db.Delete(new Product { Id = product.Id });
                 }
             }
-            var isSuccess = db.Delete(new Category { Id = id });
+            var isSuccess = _db.Delete(new Category { Id = id });
             return isSuccess;
         }
 
         public Category GetCategoryById(int id)
         {
-            return db.Get<Category>(id);
+            return _db.Get<Category>(id);
         }
 
         public Category GetCategoryByIdWithObjects(int id)
         {
-            var category = db.Get<Category>(id);
-            var products = db.GetAll<Product>().Where(p => p.CategoryId == id).ToList();
+            var category = _db.Get<Category>(id);
+            var products = _db.GetAll<Product>().Where(p => p.CategoryId == id).ToList();
             if (products.Count != 0)
             {
                 category.Products = products;
@@ -74,15 +75,15 @@ namespace Delivery.Repositories
 
         public List<Category> GetCategories()
         {
-            return db.GetAll<Category>().ToList();
+            return _db.GetAll<Category>().ToList();
         }
 
         public List<Category> GetCategoriesWithObjects()
         {
-            var categories = db.GetAll<Category>().ToList();
+            var categories = _db.GetAll<Category>().ToList();
             foreach (var category in categories)
             {
-                var products = db.GetAll<Product>().Where(p => p.CategoryId == category.Id).ToList();
+                var products = _db.GetAll<Product>().Where(p => p.CategoryId == category.Id).ToList();
                 category.Products = products;
             }
             return categories;
@@ -90,7 +91,7 @@ namespace Delivery.Repositories
 
         public bool UpdateCategory(Category category)
         {
-            var isSuccess = db.Update(category);
+            var isSuccess = _db.Update(category);
             return isSuccess;
         }
     }
