@@ -7,8 +7,8 @@ namespace DeliveryEF.Data.UoW
     public class UnitOfWork : IUnitOfWork
     {
         private DbContext _context = new DataContext();
-        private EFRepository<Product> productRepository; 
-        
+        private EFRepository<Product> productRepository;
+
         public EFRepository<Product> Products
         {
             get
@@ -20,6 +20,7 @@ namespace DeliveryEF.Data.UoW
                 return productRepository;
             }
         }
+
         public void Save()
         {
             _context.SaveChanges();
