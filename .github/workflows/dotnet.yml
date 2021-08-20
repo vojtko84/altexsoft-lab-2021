@@ -18,6 +18,6 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore "EntityFramework/Delivery/Delivery.sln"
+      run: dotnet restore "ASP/AspMyDelivery/AspMyDelivery.sln"
     - name: Build
-      run: dotnet build "EntityFramework/Delivery/Delivery.sln" --no-restore    
+      run: dotnet build "ASP/AspMyDelivery/AspMyDelivery.sln" --no-restore    
