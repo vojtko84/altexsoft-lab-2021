@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using Delivery.Data;
 using Delivery.LinqQueries;
+using Microsoft.Extensions.Configuration;
 
 namespace Delivery
 {
@@ -68,8 +70,14 @@ namespace Delivery
             {
                 Console.WriteLine($"- {item.Product.Name} | {item.Provider.Name}");
             }
-
-            Console.ReadKey();
+        }
+      
+        private static IConfigurationRoot Initialize()
+        {
+            var builder = new ConfigurationBuilder().
+                SetBasePath(Directory.GetCurrentDirectory()).
+                AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            return builder.Build();
         }
     }
 }
