@@ -1,8 +1,8 @@
-﻿using MyDelivery.Interfaces;
+﻿using System;
+using System.Threading.Tasks;
+using MyDelivery.Interfaces;
 using MyDelivery.Models;
 using MyDelivery.Validators;
-using System;
-using System.Threading.Tasks;
 
 namespace MyDelivery.Controllers
 {

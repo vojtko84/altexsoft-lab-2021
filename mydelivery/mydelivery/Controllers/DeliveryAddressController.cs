@@ -1,18 +1,18 @@
-﻿using MyDelivery.Interfaces;
-using MyDelivery.Models;
-using System.Linq;
+﻿using DeliveryEF.Data.UoW;
+using DeliveryEF.Domain.Models;
+using MyDelivery.Interfaces;
 
 namespace MyDelivery.Controllers
 {
     public class DeliveryAddressController : IDeliveryAddressController
     {
-        private readonly IContext context;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger logger;
         private readonly ICache cache;
 
-        public DeliveryAddressController(IContext context, ILogger logger, ICache cache)
+        public DeliveryAddressController(IUnitOfWork unitOfWork, ILogger logger, ICache cache)
         {
-            this.context = context;
+            _unitOfWork = unitOfWork;
             this.logger = logger;
             this.cache = cache;
         }
@@ -27,11 +27,9 @@ namespace MyDelivery.Controllers
                 CityName = cityName,
                 AreaName = areaName,
                 PostCode = postCode,
-                Id = context.DeliveryAddresses.Max(s => s.Id) + 1,
-                BuyerId = buyerId
             };
-            context.DeliveryAddresses.Add(deliveryAddress);
-            context.Save();
+            _unitOfWork.DeliveryAddresses.Create(deliveryAddress);
+            _unitOfWork.Save();
             cache.Add<DeliveryAddress>(deliveryAddress.Id, deliveryAddress);
             logger.SaveIntoFile($"Added delivery address ID: {deliveryAddress.Id}");
             return deliveryAddress;
@@ -40,8 +38,6 @@ namespace MyDelivery.Controllers
         public DeliveryAddress AddDeliveryAddress(string address, int buyerId)
         {
             var deliveryAddress = new DeliveryAddress();
-            deliveryAddress.BuyerId = buyerId;
-            deliveryAddress.Id = context.DeliveryAddresses.Max(s => s.Id) + 1;
             string[] separators = { ".", ",", " ", };
             var parsedAddress = address.Trim().Split(separators, System.StringSplitOptions.RemoveEmptyEntries);
             deliveryAddress.StreetName = parsedAddress[1];
@@ -50,8 +46,8 @@ namespace MyDelivery.Controllers
             {
                 deliveryAddress.ApartmentNumber = parsedAddress[5];
             }
-            context.DeliveryAddresses.Add(deliveryAddress);
-            context.Save();
+            _unitOfWork.DeliveryAddresses.Create(deliveryAddress);
+            _unitOfWork.Save();
             cache.Add<DeliveryAddress>(deliveryAddress.Id, deliveryAddress);
             logger.SaveIntoFile($"Added delivery address ID: {deliveryAddress.Id}");
             return deliveryAddress;

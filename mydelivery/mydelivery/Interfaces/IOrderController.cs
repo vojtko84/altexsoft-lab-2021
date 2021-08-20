@@ -1,5 +1,5 @@
-﻿using MyDelivery.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using DeliveryEF.Domain.Models;
 
 namespace MyDelivery.Interfaces
 {

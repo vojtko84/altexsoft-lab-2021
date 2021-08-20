@@ -1,11 +1,11 @@
-﻿using MyDelivery.Enums;
-using MyDelivery.Interfaces;
-using MyDelivery.Models;
-using System;
+﻿using System;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using MyDelivery.Enums;
+using MyDelivery.Interfaces;
+using MyDelivery.Models;
 
 namespace MyDelivery.Controllers
 {

@@ -1,35 +1,35 @@
-﻿using MyDelivery.Interfaces;
-using MyDelivery.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using DeliveryEF.Data.UoW;
+using DeliveryEF.Domain.Models;
+using MyDelivery.Interfaces;
 
 namespace MyDelivery.Controllers
 {
     public class CategoryController : ICategoryController
     {
-        private readonly IContext context;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger logger;
 
-        public CategoryController(IContext context, ILogger logger)
+        public CategoryController(IUnitOfWork unitOfWork, ILogger logger)
         {
-            this.context = context;
+            _unitOfWork = unitOfWork;
             this.logger = logger;
         }
 
         public IList<Category> GetCategories()
         {
-            return context.Categories;
+            return _unitOfWork.Categories.GetAll().ToList();
         }
 
         public void AddCategory(string name)
         {
             var category = new Category
             {
-                Id = context.Categories.Max(s => s.Id) + 1,
                 Name = name
             };
-            context.Categories.Add(category);
-            context.Save();
+            _unitOfWork.Categories.Create(category);
+            _unitOfWork.Save();
             logger.SaveIntoFile($"Added category {category.Name}");
         }
     }

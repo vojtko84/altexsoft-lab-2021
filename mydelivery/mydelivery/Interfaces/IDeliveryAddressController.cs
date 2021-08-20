@@ -1,4 +1,4 @@
-﻿using MyDelivery.Models;
+﻿using DeliveryEF.Domain.Models;
 
 namespace MyDelivery.Interfaces
 {

@@ -1,5 +1,5 @@
-﻿using MyDelivery.Enums;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using MyDelivery.Enums;
 
 namespace MyDelivery.Interfaces
 {

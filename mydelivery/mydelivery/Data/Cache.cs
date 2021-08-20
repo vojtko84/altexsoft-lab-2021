@@ -1,7 +1,7 @@
-﻿using MyDelivery.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MyDelivery.Interfaces;
 
 namespace MyDelivery.Data
 {

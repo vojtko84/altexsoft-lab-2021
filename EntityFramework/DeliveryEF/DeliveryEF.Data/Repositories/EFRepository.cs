@@ -22,6 +22,15 @@ namespace DeliveryEF.Data.Repositories
             _context.Remove(entity);
         }
 
+        public void DeleteById(int id)
+        {
+            var product = GetById(id);
+            if (product != null)
+            {
+                Delete(product);
+            }
+        }
+
         public IEnumerable<T> GetAll()
         {
             return _context.Set<T>();

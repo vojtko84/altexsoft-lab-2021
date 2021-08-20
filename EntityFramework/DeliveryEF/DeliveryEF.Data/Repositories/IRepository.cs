@@ -13,5 +13,7 @@ namespace DeliveryEF.Data.Repositories
         void Update(T entity);
 
         void Delete(T entity);
+
+        void DeleteById(int id);
     }
 }

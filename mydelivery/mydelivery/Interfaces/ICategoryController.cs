@@ -1,5 +1,5 @@
-﻿using MyDelivery.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using DeliveryEF.Domain.Models;
 
 namespace MyDelivery.Interfaces
 {
