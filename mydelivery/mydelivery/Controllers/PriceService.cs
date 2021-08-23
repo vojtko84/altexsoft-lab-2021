@@ -9,7 +9,7 @@ using MyDelivery.Models;
 
 namespace MyDelivery.Controllers
 {
-    public class PriceController : IPriceController
+    public class PriceService : IPriceController
     {
         public async Task<decimal> GetPriceForCurrency(CurrencyNames currencyName, decimal price)
         {

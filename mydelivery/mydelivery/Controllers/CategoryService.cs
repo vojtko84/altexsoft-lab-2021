@@ -6,12 +6,12 @@ using MyDelivery.Interfaces;
 
 namespace MyDelivery.Controllers
 {
-    public class CategoryController : ICategoryController
+    public class CategoryService : ICategoryController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger logger;
 
-        public CategoryController(IUnitOfWork unitOfWork, ILogger logger)
+        public CategoryService(IUnitOfWork unitOfWork, ILogger logger)
         {
             _unitOfWork = unitOfWork;
             this.logger = logger;

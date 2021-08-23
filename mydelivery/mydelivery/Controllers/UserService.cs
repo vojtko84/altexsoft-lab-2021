@@ -3,7 +3,7 @@ using MyDelivery.Models;
 
 namespace MyDelivery.Controllers
 {
-    public class UserController : IUserController
+    public class UserService : IUserController
     {
         public User User { get; set; }
 

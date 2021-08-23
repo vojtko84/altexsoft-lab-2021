@@ -6,13 +6,13 @@ using MyDelivery.Interfaces;
 
 namespace MyDelivery.Controllers
 {
-    public class ProductController : IProductController
+    public class ProductService : IProductController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger logger;
         private readonly ICache cache;
 
-        public ProductController(IUnitOfWork unitOfWork, ILogger logger, ICache cache)
+        public ProductService(IUnitOfWork unitOfWork, ILogger logger, ICache cache)
         {
             _unitOfWork = unitOfWork;
             this.logger = logger;

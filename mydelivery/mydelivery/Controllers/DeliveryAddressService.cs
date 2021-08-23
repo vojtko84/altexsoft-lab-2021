@@ -4,13 +4,13 @@ using MyDelivery.Interfaces;
 
 namespace MyDelivery.Controllers
 {
-    public class DeliveryAddressController : IDeliveryAddressController
+    public class DeliveryAddressService : IDeliveryAddressController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger logger;
         private readonly ICache cache;
 
-        public DeliveryAddressController(IUnitOfWork unitOfWork, ILogger logger, ICache cache)
+        public DeliveryAddressService(IUnitOfWork unitOfWork, ILogger logger, ICache cache)
         {
             _unitOfWork = unitOfWork;
             this.logger = logger;
