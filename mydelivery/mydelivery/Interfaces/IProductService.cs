@@ -1,9 +1,9 @@
-﻿using MyDelivery.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using DeliveryEF.Domain.Models;
 
 namespace MyDelivery.Interfaces
 {
-    public interface IProductController
+    public interface IProductService
     {
         void AddProduct(string name, string description, int categoryId, decimal price, int sellerId);
 

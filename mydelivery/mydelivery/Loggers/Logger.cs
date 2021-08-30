@@ -1,11 +1,11 @@
-﻿using MyDelivery.Interfaces;
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
+using MyDelivery.Interfaces;
 
 namespace MyDelivery.Loggers
 {
-    internal class Logger : ILogger
+    public class Logger : ILogger
     {
         private const string FileToSaveInfo = "log";
 

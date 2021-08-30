@@ -1,21 +1,21 @@
-﻿using MyDelivery.Interfaces;
+﻿using System;
+using System.Threading.Tasks;
+using MyDelivery.Interfaces;
 using MyDelivery.Models;
 using MyDelivery.Validators;
-using System;
-using System.Threading.Tasks;
 
 namespace MyDelivery.Controllers
 {
     public class Presenter
     {
         private readonly IContext context;
-        private readonly IUserController userController;
-        private readonly IProductController productController;
-        private readonly IOrderController orderController;
-        private readonly ICategoryController categoryController;
-        private readonly IDeliveryAddressController deliveryAddressController;
+        private readonly IUserService userController;
+        private readonly IProductService productController;
+        private readonly IOrderService orderController;
+        private readonly ICategoryService categoryController;
+        private readonly IDeliveryAddressService deliveryAddressController;
 
-        public Presenter(IContext context, IUserController userController, IProductController productController, IOrderController orderController, ICategoryController categoryController, IDeliveryAddressController deliveryAddressController)
+        public Presenter(IContext context, IUserService userController, IProductService productController, IOrderService orderController, ICategoryService categoryController, IDeliveryAddressService deliveryAddressController)
         {
             this.context = context;
             this.userController = userController;

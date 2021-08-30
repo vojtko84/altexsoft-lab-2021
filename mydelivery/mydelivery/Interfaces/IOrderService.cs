@@ -1,9 +1,9 @@
-﻿using MyDelivery.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using DeliveryEF.Domain.Models;
 
 namespace MyDelivery.Interfaces
 {
-    public interface IOrderController
+    public interface IOrderService
     {
         Order AddOrder(int buyerId, Product product, DeliveryAddress deliveryAddress);
 

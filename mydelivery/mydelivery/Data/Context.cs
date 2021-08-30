@@ -1,6 +1,6 @@
-﻿using MyDelivery.Interfaces;
+﻿using System.Collections.Generic;
+using MyDelivery.Interfaces;
 using MyDelivery.Models;
-using System.Collections.Generic;
 
 namespace MyDelivery.Data
 {

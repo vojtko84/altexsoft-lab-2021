@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\EntityFramework\DeliveryEF\DeliveryEF.Data\AspMyDelivery.Data.csproj" />
+    <ProjectReference Include="..\..\..\EntityFramework\DeliveryEF\DeliveryEF.Domain\AspMyDelivery.Domain.csproj" />
+    <ProjectReference Include="..\..\..\mydelivery\mydelivery\AspMyDelivery.BLL.csproj" />
+  </ItemGroup>
+
+</Project>

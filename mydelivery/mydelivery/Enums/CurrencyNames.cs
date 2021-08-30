@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyDelivery.Enums
+﻿namespace MyDelivery.Enums
 {
     public enum CurrencyNames
     {
-        RUR,
+        RUB,
         EUR,
         USD
     }

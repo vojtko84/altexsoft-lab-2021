@@ -1,21 +1,21 @@
-﻿using MyDelivery.Enums;
+﻿using System.Threading.Tasks;
+using DeliveryEF.Data.UoW;
+using DeliveryEF.Domain.Models;
+using MyDelivery.Enums;
 using MyDelivery.Interfaces;
-using MyDelivery.Models;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyDelivery.Controllers
 {
-    public class OrderController : IOrderController
+    public class OrderService : IOrderService
     {
-        private readonly IContext context;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger logger;
         private readonly ICache cache;
-        private readonly IPriceController priceController;
+        private readonly IPriceService priceController;
 
-        public OrderController(IContext context, ILogger logger, ICache cache, IPriceController priceController)
+        public OrderService(IUnitOfWork unitOfWork, ILogger logger, ICache cache, IPriceService priceController)
         {
-            this.context = context;
+            _unitOfWork = unitOfWork;
             this.logger = logger;
             this.cache = cache;
             this.priceController = priceController;
@@ -25,14 +25,13 @@ namespace MyDelivery.Controllers
         {
             var order = new Order
             {
-                Id = context.Orders.Max(s => s.Id) + 1,
-                BuyerId = buyerId
+                CustomerId = buyerId
             };
 
-            order.Products.Add(product);
+            _unitOfWork.Products.Create(product);
             order.DeliveryAddress = deliveryAddress;
-            context.Orders.Add(order);
-            context.Save();
+            _unitOfWork.Orders.Create(order);
+            _unitOfWork.Save();
             cache.Add<Order>(order.Id, order);
             logger.SaveIntoFile($"Added order ID: {order.Id}");
             return order;

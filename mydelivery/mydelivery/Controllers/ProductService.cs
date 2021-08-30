@@ -1,19 +1,20 @@
-﻿using MyDelivery.Interfaces;
-using MyDelivery.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using DeliveryEF.Data.UoW;
+using DeliveryEF.Domain.Models;
+using MyDelivery.Interfaces;
 
 namespace MyDelivery.Controllers
 {
-    public class ProductController : IProductController
+    public class ProductService : IProductService
     {
-        private readonly IContext context;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger logger;
         private readonly ICache cache;
 
-        public ProductController(IContext context, ILogger logger, ICache cache)
+        public ProductService(IUnitOfWork unitOfWork, ILogger logger, ICache cache)
         {
-            this.context = context;
+            _unitOfWork = unitOfWork;
             this.logger = logger;
             this.cache = cache;
         }
@@ -22,32 +23,31 @@ namespace MyDelivery.Controllers
         {
             var product = new Product
             {
-                Id = context.Products.Max(s => s.Id) + 1,
                 Name = name,
                 Description = description,
                 CategoryId = categoryId,
                 Price = price,
-                SellerId = sellerId
+                ProviderId = sellerId,
             };
-            context.Products.Add(product);
-            context.Save();
-            cache.Add<Product>(product.Id, product);
+            _unitOfWork.Products.Create(product);
+            _unitOfWork.Save();
+            cache.Add(product.Id, product);
             logger.SaveIntoFile($"Added product ID: {product.Id}");
         }
 
         public IList<Product> GetProducts()
         {
-            return context.Products;
+            return _unitOfWork.Products.GetAll().ToList();
         }
 
         public Product GetProduct(int id)
         {
-            return cache.GetOrCreate<Product>(id, () => context.Products.FirstOrDefault(product => product.Id == id));
+            return cache.GetOrCreate(id, () => _unitOfWork.Products.GetById(id));
         }
 
         public void DeleteProduct(int id)
         {
-            context.Products.Remove(GetProduct(id));
+            _unitOfWork.Products.DeleteById(id);
             logger.SaveIntoFile($"Deleted product ID: {id}");
         }
     }

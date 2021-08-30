@@ -2,7 +2,7 @@
 
 namespace MyDelivery.Interfaces
 {
-    public interface IUserController
+    public interface IUserService
     {
         User User { get; set; }
 
