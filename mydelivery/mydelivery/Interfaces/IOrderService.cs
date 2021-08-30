@@ -3,7 +3,7 @@ using DeliveryEF.Domain.Models;
 
 namespace MyDelivery.Interfaces
 {
-    public interface IOrderController
+    public interface IOrderService
     {
         Order AddOrder(int buyerId, Product product, DeliveryAddress deliveryAddress);
 

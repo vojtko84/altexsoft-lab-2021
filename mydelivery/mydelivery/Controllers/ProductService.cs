@@ -6,7 +6,7 @@ using MyDelivery.Interfaces;
 
 namespace MyDelivery.Controllers
 {
-    public class ProductService : IProductController
+    public class ProductService : IProductService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger logger;

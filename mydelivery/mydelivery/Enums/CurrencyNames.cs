@@ -2,7 +2,7 @@
 {
     public enum CurrencyNames
     {
-        RUR,
+        RUB,
         EUR,
         USD
     }

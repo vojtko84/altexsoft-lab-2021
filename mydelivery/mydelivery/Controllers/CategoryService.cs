@@ -6,15 +6,15 @@ using MyDelivery.Interfaces;
 
 namespace MyDelivery.Controllers
 {
-    public class CategoryService : ICategoryController
+    public class CategoryService : ICategoryService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger logger;
+        private readonly ILogger _logger;
 
         public CategoryService(IUnitOfWork unitOfWork, ILogger logger)
         {
             _unitOfWork = unitOfWork;
-            this.logger = logger;
+            _logger = logger;
         }
 
         public IList<Category> GetCategories()
@@ -30,7 +30,7 @@ namespace MyDelivery.Controllers
             };
             _unitOfWork.Categories.Create(category);
             _unitOfWork.Save();
-            logger.SaveIntoFile($"Added category {category.Name}");
+            _logger.SaveIntoFile($"Added category {category.Name}");
         }
     }
 }

@@ -3,7 +3,7 @@ using DeliveryEF.Domain.Models;
 
 namespace MyDelivery.Interfaces
 {
-    public interface ICategoryController
+    public interface ICategoryService
     {
         IList<Category> GetCategories();
 

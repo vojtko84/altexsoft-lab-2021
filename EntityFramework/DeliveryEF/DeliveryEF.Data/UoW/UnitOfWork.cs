@@ -7,12 +7,12 @@ namespace DeliveryEF.Data.UoW
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DbContext _context = new DataContext();
-        private EFRepository<Product> _productRepository;
-        private EFRepository<Category> _categoryRepository;
-        private EFRepository<DeliveryAddress> _deliveryAddressRepository;
-        private EFRepository<Order> _orderRepository;
+        private IRepository<Product> _productRepository;
+        private IRepository<Category> _categoryRepository;
+        private IRepository<DeliveryAddress> _deliveryAddressRepository;
+        private IRepository<Order> _orderRepository;
 
-        public EFRepository<Product> Products
+        public IRepository<Product> Products
         {
             get
             {
@@ -24,7 +24,7 @@ namespace DeliveryEF.Data.UoW
             }
         }
 
-        public EFRepository<Category> Categories
+        public IRepository<Category> Categories
         {
             get
             {
@@ -36,7 +36,7 @@ namespace DeliveryEF.Data.UoW
             }
         }
 
-        public EFRepository<DeliveryAddress> DeliveryAddresses
+        public IRepository<DeliveryAddress> DeliveryAddresses
         {
             get
             {
@@ -48,7 +48,7 @@ namespace DeliveryEF.Data.UoW
             }
         }
 
-        public EFRepository<Order> Orders
+        public IRepository<Order> Orders
         {
             get
             {

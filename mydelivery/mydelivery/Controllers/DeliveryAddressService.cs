@@ -4,7 +4,7 @@ using MyDelivery.Interfaces;
 
 namespace MyDelivery.Controllers
 {
-    public class DeliveryAddressService : IDeliveryAddressController
+    public class DeliveryAddressService : IDeliveryAddressService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger logger;
