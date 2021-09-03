@@ -9,6 +9,7 @@ namespace DeliveryEF.Data.UoW
         IRepository<Category> Categories { get; }
         IRepository<DeliveryAddress> DeliveryAddresses { get; }
         IRepository<Order> Orders { get; }
+        IRepository<Provider> Providers { get; }
 
         void Save();
     }
