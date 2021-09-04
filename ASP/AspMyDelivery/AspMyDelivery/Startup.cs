@@ -1,3 +1,5 @@
+using AspMyDelivery.BLL.Interfaces;
+using AspMyDelivery.BLL.Services;
 using DeliveryEF.Data;
 using DeliveryEF.Data.Repositories;
 using DeliveryEF.Data.UoW;
@@ -28,6 +30,7 @@ namespace AspMyDelivery
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddControllersWithViews();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AspMyDelivery", Version = "v1" });
@@ -41,6 +44,7 @@ namespace AspMyDelivery
             services.AddTransient<ICache, Cache>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IProviderService, ProviderService>();
             services.AddAutoMapper(typeof(Startup));
         }
 
@@ -61,7 +65,9 @@ namespace AspMyDelivery
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                name: "mvc",
+                pattern: "mvc/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

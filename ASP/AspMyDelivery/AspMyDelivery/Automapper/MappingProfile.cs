@@ -9,7 +9,9 @@ namespace AspMyDelivery.API.Automapper
         public MappingProfile()
         {
             CreateMap<Product, ProductDto>();
-            CreateMap<ProductForCreationDto, Product>();
+            CreateMap<ProductForEditDto, Product>();
+            CreateMap<Product, ProductForEditDto>();
+            CreateMap<ProductForCreateDto, Product>();
             CreateMap<Category, CategoryDto>();
             CreateMap<CategoryForCreationDto, Category>();
             CreateMap<Provider, ProviderDto>();
