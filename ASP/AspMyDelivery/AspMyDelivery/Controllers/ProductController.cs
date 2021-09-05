@@ -39,7 +39,7 @@ namespace AspMyDelivery.API.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] ProductForEditDto product)
+        public void Post([FromBody] ProductForCreateDto product)
         {
             var productEntity = _mapper.Map<Product>(product);
             _productService.AddProduct(productEntity);
