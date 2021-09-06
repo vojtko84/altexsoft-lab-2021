@@ -18,6 +18,7 @@ namespace AspMyDelivery.API.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             var products = _productService.GetProducts();
@@ -26,6 +27,7 @@ namespace AspMyDelivery.API.Controllers
             return View(productsDto);
         }
 
+        [HttpGet]
         public IActionResult Details(int id)
         {
             var product = _productService.GetProduct(id);
@@ -47,6 +49,7 @@ namespace AspMyDelivery.API.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             var product = _productService.GetProduct(id);
@@ -55,6 +58,7 @@ namespace AspMyDelivery.API.Controllers
             return View(productEntity);
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -73,6 +77,7 @@ namespace AspMyDelivery.API.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             var productForDelete = _productService.GetProduct(id);
