@@ -1,4 +1,4 @@
-﻿using AspMyDelivery.API.DataTransferObjects;
+﻿using AspMyDelivery.API.ViewModels;
 using AutoMapper;
 using DeliveryEF.Domain.Models;
 
@@ -8,12 +8,12 @@ namespace AspMyDelivery.API.Automapper
     {
         public MappingProfile()
         {
-            CreateMap<Product, ProductDto>();
-            CreateMap<ProductForCreationDto, Product>();
-            CreateMap<Category, CategoryDto>();
-            CreateMap<CategoryForCreationDto, Category>();
-            CreateMap<Provider, ProviderDto>();
-            CreateMap<ProviderForCreationDto, Provider>();
+            CreateMap<Product, ProductViewModel>();
+            CreateMap<ProductForCreationViewModel, Product>();
+            CreateMap<Category, CategoryViewModel>();
+            CreateMap<CategoryForCreationViewModel, Category>();
+            CreateMap<Provider, ProviderViewModel>();
+            CreateMap<ProviderForCreationViewModel, Provider>();
         }
     }
 }

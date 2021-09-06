@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using AspMyDelivery.API.DataTransferObjects;
+using AspMyDelivery.API.ViewModels;
 using AutoMapper;
 using DeliveryEF.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -21,32 +21,32 @@ namespace AspMyDelivery.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ProductDto> Get()
+        public IEnumerable<ProductViewModel> Get()
         {
             var products = _productService.GetProducts();
-            var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products);
+            var productsViewModel = _mapper.Map<IEnumerable<ProductViewModel>>(products);
 
-            return productsDto;
+            return productsViewModel;
         }
 
         [HttpGet("{id}")]
-        public ProductDto Get(int id)
+        public ProductViewModel Get(int id)
         {
             var product = _productService.GetProduct(id);
-            var productDto = _mapper.Map<ProductDto>(product);
+            var productViewModel = _mapper.Map<ProductViewModel>(product);
 
-            return productDto;
+            return productViewModel;
         }
 
         [HttpPost]
-        public void Post([FromBody] ProductForCreationDto product)
+        public void Post([FromBody] ProductForCreationViewModel product)
         {
             var productEntity = _mapper.Map<Product>(product);
             _productService.AddProduct(productEntity);
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] ProductForCreationDto product)
+        public void Put(int id, [FromBody] ProductForCreationViewModel product)
         {
             var productEntity = _mapper.Map<Product>(product);
             productEntity.Id = id;

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using DeliveryEF.Domain.Enums;
 using DeliveryEF.Domain.Models;
 
-namespace AspMyDelivery.API.DataTransferObjects
+namespace AspMyDelivery.API.ViewModels
 {
-    public class OrderDto
+    public class OrderViewModel
     {
         public int Id { get; set; }
         public int CustomerId { get; set; }
