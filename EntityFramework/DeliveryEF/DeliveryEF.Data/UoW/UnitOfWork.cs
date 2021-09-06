@@ -6,11 +6,17 @@ namespace DeliveryEF.Data.UoW
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly DbContext _context = new DataContext();
+        private readonly DbContext _context;
         private IRepository<Product> _productRepository;
         private IRepository<Category> _categoryRepository;
         private IRepository<DeliveryAddress> _deliveryAddressRepository;
         private IRepository<Order> _orderRepository;
+        private IRepository<Provider> _providerRepository;
+
+        public UnitOfWork(DbContext context)
+        {
+            _context = context;
+        }
 
         public IRepository<Product> Products
         {
@@ -57,6 +63,18 @@ namespace DeliveryEF.Data.UoW
                     return _orderRepository = new EFRepository<Order>(_context);
                 }
                 return _orderRepository;
+            }
+        }
+
+        public IRepository<Provider> Providers
+        {
+            get
+            {
+                if (_providerRepository is null)
+                {
+                    return _providerRepository = new EFRepository<Provider>(_context);
+                }
+                return _providerRepository;
             }
         }
 

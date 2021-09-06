@@ -22,15 +22,33 @@ namespace MyDelivery.Controllers
             return _unitOfWork.Categories.GetAll().ToList();
         }
 
-        public void AddCategory(string name)
+        public Category GetCategory(int id)
         {
-            var category = new Category
-            {
-                Name = name
-            };
+            return _unitOfWork.Categories.GetById(id);
+        }
+
+        public void AddCategory(Category category)
+        {
             _unitOfWork.Categories.Create(category);
             _unitOfWork.Save();
             _logger.SaveIntoFile($"Added category {category.Name}");
+        }
+
+        public void UpdateCategory(Category category)
+        {
+            var categoryToUpdate = GetCategory(category.Id);
+            categoryToUpdate.Name = category.Name;
+
+            _unitOfWork.Categories.Update(categoryToUpdate);
+            _unitOfWork.Save();
+            _logger.SaveIntoFile($"Update category ID: {category.Id}");
+        }
+
+        public void DeleteCategory(int id)
+        {
+            _unitOfWork.Categories.DeleteById(id);
+            _unitOfWork.Save();
+            _logger.SaveIntoFile($"Deleted category ID: {id}");
         }
     }
 }

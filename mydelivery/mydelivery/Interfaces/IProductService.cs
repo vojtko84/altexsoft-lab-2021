@@ -5,12 +5,14 @@ namespace MyDelivery.Interfaces
 {
     public interface IProductService
     {
-        void AddProduct(string name, string description, int categoryId, decimal price, int sellerId);
+        void AddProduct(Product product);
 
         IList<Product> GetProducts();
 
         Product GetProduct(int id);
 
         void DeleteProduct(int id);
+
+        void UpdateProduct(Product product);
     }
 }
