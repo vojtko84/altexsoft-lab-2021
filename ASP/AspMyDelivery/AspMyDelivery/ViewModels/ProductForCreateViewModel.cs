@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AspMyDelivery.API.DataTransferObjects
+namespace AspMyDelivery.API.ViewModels
 {
-    public class ProductForCreateDto
+    public class ProductForCreateViewModel
     {
         [Required(ErrorMessage = "Please enter name")]
         public string Name { get; set; }

@@ -1,6 +1,6 @@
-﻿namespace AspMyDelivery.API.DataTransferObjects
+﻿namespace AspMyDelivery.API.ViewModels
 {
-    public class ProductDto
+    public class ProductViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

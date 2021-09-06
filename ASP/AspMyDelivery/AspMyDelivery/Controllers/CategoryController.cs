@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using AspMyDelivery.API.DataTransferObjects;
+using AspMyDelivery.API.ViewModels;
 using AutoMapper;
 using DeliveryEF.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -21,32 +21,32 @@ namespace AspMyDelivery.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<CategoryDto> Get()
+        public IEnumerable<CategoryViewModel> Get()
         {
             var categories = _categoryService.GetCategories();
-            var categoriesDto = _mapper.Map<IEnumerable<CategoryDto>>(categories);
+            var categoriesViewModel = _mapper.Map<IEnumerable<CategoryViewModel>>(categories);
 
-            return categoriesDto;
+            return categoriesViewModel;
         }
 
         [HttpGet("{id}")]
-        public CategoryDto Get(int id)
+        public CategoryViewModel Get(int id)
         {
             var category = _categoryService.GetCategory(id);
-            var categoryDto = _mapper.Map<CategoryDto>(category);
+            var categoryViewModel = _mapper.Map<CategoryViewModel>(category);
 
-            return categoryDto;
+            return categoryViewModel;
         }
 
         [HttpPost]
-        public void Post([FromBody] CategoryForCreationDto category)
+        public void Post([FromBody] CategoryForCreateViewModel category)
         {
             var categoryEntity = _mapper.Map<Category>(category);
             _categoryService.AddCategory(categoryEntity);
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] CategoryForCreationDto category)
+        public void Put(int id, [FromBody] CategoryForCreateViewModel category)
         {
             var categoryEntity = _mapper.Map<Category>(category);
             categoryEntity.Id = id;

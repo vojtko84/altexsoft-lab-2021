@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using AspMyDelivery.API.DataTransferObjects;
+using AspMyDelivery.API.ViewModels;
 using AutoMapper;
 using DeliveryEF.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +21,7 @@ namespace AspMyDelivery.API.Controllers
         public IActionResult Index()
         {
             var products = _productService.GetProducts();
-            var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products);
+            var productsDto = _mapper.Map<IEnumerable<ProductViewModel>>(products);
 
             return View(productsDto);
         }
@@ -29,13 +29,13 @@ namespace AspMyDelivery.API.Controllers
         public IActionResult Details(int id)
         {
             var product = _productService.GetProduct(id);
-            var productDto = _mapper.Map<ProductDto>(product);
+            var productDto = _mapper.Map<ProductViewModel>(product);
 
             return View(productDto);
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, ProductForEditDto product)
+        public IActionResult Edit(int id, ProductForEditViewModel product)
         {
             if (!ModelState.IsValid)
             {
@@ -50,7 +50,7 @@ namespace AspMyDelivery.API.Controllers
         public IActionResult Edit(int id)
         {
             var product = _productService.GetProduct(id);
-            var productEntity = _mapper.Map<ProductForEditDto>(product);
+            var productEntity = _mapper.Map<ProductForEditViewModel>(product);
 
             return View(productEntity);
         }
@@ -61,7 +61,7 @@ namespace AspMyDelivery.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(ProductForCreateDto product)
+        public IActionResult Create(ProductForCreateViewModel product)
         {
             if (!ModelState.IsValid)
             {

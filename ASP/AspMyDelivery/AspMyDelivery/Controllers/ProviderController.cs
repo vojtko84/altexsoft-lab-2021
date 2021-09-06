@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using AspMyDelivery.API.DataTransferObjects;
+using AspMyDelivery.API.ViewModels;
 using AspMyDelivery.BLL.Interfaces;
 using AutoMapper;
 using DeliveryEF.Domain.Models;
@@ -21,32 +21,32 @@ namespace AspMyDelivery.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ProviderDto> Get()
+        public IEnumerable<ProviderViewModel> Get()
         {
             var providers = _providerService.GetProviders();
-            var providersDto = _mapper.Map<IEnumerable<ProviderDto>>(providers);
+            var providersViewModel = _mapper.Map<IEnumerable<ProviderViewModel>>(providers);
 
-            return providersDto;
+            return providersViewModel;
         }
 
         [HttpGet("{id}")]
-        public ProviderDto Get(int id)
+        public ProviderViewModel Get(int id)
         {
             var provider = _providerService.GetProvider(id);
-            var providerDto = _mapper.Map<ProviderDto>(provider);
+            var providerViewModel = _mapper.Map<ProviderViewModel>(provider);
 
-            return providerDto;
+            return providerViewModel;
         }
 
         [HttpPost]
-        public void Post([FromBody] ProviderForCreationDto provider)
+        public void Post([FromBody] ProviderForCreateViewModel provider)
         {
             var providerEntity = _mapper.Map<Provider>(provider);
             _providerService.AddProvider(providerEntity);
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] ProviderForCreationDto provider)
+        public void Put(int id, [FromBody] ProviderForCreateViewModel provider)
         {
             var providerEntity = _mapper.Map<Provider>(provider);
             providerEntity.Id = id;
