@@ -9,9 +9,9 @@ namespace MyDelivery.Controllers
     public class CategoryService : ICategoryService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger _logger;
+        private readonly IMyLogger _logger;
 
-        public CategoryService(IUnitOfWork unitOfWork, ILogger logger)
+        public CategoryService(IUnitOfWork unitOfWork, IMyLogger logger)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;

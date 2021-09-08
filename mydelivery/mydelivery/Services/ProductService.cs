@@ -9,10 +9,10 @@ namespace MyDelivery.Controllers
     public class ProductService : IProductService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger _logger;
+        private readonly IMyLogger _logger;
         private readonly ICache _cache;
 
-        public ProductService(IUnitOfWork unitOfWork, ILogger logger, ICache cache)
+        public ProductService(IUnitOfWork unitOfWork, IMyLogger logger, ICache cache)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;

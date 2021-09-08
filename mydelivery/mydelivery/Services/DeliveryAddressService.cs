@@ -7,10 +7,10 @@ namespace MyDelivery.Controllers
     public class DeliveryAddressService : IDeliveryAddressService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger logger;
+        private readonly IMyLogger logger;
         private readonly ICache cache;
 
-        public DeliveryAddressService(IUnitOfWork unitOfWork, ILogger logger, ICache cache)
+        public DeliveryAddressService(IUnitOfWork unitOfWork, IMyLogger logger, ICache cache)
         {
             _unitOfWork = unitOfWork;
             this.logger = logger;

@@ -10,9 +10,9 @@ namespace AspMyDelivery.BLL.Services
     public class ProviderService : IProviderService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger _logger;
+        private readonly IMyLogger _logger;
 
-        public ProviderService(IUnitOfWork unitOfWork, ILogger logger)
+        public ProviderService(IUnitOfWork unitOfWork, IMyLogger logger)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;

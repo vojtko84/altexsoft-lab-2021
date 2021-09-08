@@ -1,6 +1,6 @@
 ﻿namespace MyDelivery.Interfaces
 {
-    public interface ILogger
+    public interface IMyLogger
     {
         void SaveIntoFile(string content);
     }

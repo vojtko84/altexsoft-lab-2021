@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using AspMyDelivery.API.Filters;
 using AspMyDelivery.API.ViewModels;
 using AutoMapper;
 using DeliveryEF.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using MyDelivery.Interfaces;
 
 namespace AspMyDelivery.API.Controllers
@@ -13,14 +15,16 @@ namespace AspMyDelivery.API.Controllers
     {
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
+        private readonly ILogger<CategoryController> _logger;
 
-        public CategoryController(ICategoryService categoryService, IMapper mapper)
+        public CategoryController(ICategoryService categoryService, IMapper mapper, ILogger<CategoryController> logger)
         {
             _categoryService = categoryService;
             _mapper = mapper;
+            _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet]        
         public IEnumerable<CategoryViewModel> Get()
         {
             var categories = _categoryService.GetCategories();
@@ -39,6 +43,7 @@ namespace AspMyDelivery.API.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(MyActionFilter))]
         public void Post([FromBody] CreateCategoryViewModel category)
         {
             var categoryEntity = _mapper.Map<Category>(category);

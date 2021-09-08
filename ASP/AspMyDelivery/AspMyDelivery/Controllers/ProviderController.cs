@@ -4,6 +4,7 @@ using AspMyDelivery.BLL.Interfaces;
 using AutoMapper;
 using DeliveryEF.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace AspMyDelivery.API.Controllers
 {
@@ -13,11 +14,13 @@ namespace AspMyDelivery.API.Controllers
     {
         private readonly IProviderService _providerService;
         private readonly IMapper _mapper;
+        private readonly ILogger<ProviderController> _logger;
 
-        public ProviderController(IProviderService providerService, IMapper mapper)
+        public ProviderController(IProviderService providerService, IMapper mapper, ILogger<ProviderController> logger)
         {
             _providerService = providerService;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet]

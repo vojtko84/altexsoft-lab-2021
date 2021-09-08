@@ -1,4 +1,5 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using AspMyDelivery.API.HtmlHelpers
 
 @model IEnumerable<AspMyDelivery.API.ViewModels.ProductViewModel>
 
@@ -60,5 +61,6 @@
             }
         </tbody>
     </table>
+    @Html.CreateListProduct(Model);
 </body>
 </html>

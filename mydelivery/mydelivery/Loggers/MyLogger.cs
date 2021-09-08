@@ -5,7 +5,7 @@ using MyDelivery.Interfaces;
 
 namespace MyDelivery.Loggers
 {
-    public class Logger : ILogger
+    public class MyLogger : IMyLogger
     {
         private const string FileToSaveInfo = "log";
 
