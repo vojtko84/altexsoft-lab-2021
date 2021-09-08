@@ -9,11 +9,12 @@ namespace AspMyDelivery.API.Automapper
         public MappingProfile()
         {
             CreateMap<Product, ProductViewModel>();
-            CreateMap<ProductForCreationViewModel, Product>();
+            CreateMap<CreateProductViewModel, Product>();
+            CreateMap<EditProductViewModel, Product>().ReverseMap();
             CreateMap<Category, CategoryViewModel>();
-            CreateMap<CategoryForCreationViewModel, Category>();
+            CreateMap<CreateCategoryViewModel, Category>();
             CreateMap<Provider, ProviderViewModel>();
-            CreateMap<ProviderForCreationViewModel, Provider>();
+            CreateMap<CreateProviderViewModel, Provider>();
         }
     }
 }
