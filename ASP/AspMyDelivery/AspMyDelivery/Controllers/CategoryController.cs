@@ -39,14 +39,14 @@ namespace AspMyDelivery.API.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] CategoryForCreateViewModel category)
+        public void Post([FromBody] CreateCategoryViewModel category)
         {
             var categoryEntity = _mapper.Map<Category>(category);
             _categoryService.AddCategory(categoryEntity);
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] CategoryForCreateViewModel category)
+        public void Put(int id, [FromBody] CreateCategoryViewModel category)
         {
             var categoryEntity = _mapper.Map<Category>(category);
             categoryEntity.Id = id;

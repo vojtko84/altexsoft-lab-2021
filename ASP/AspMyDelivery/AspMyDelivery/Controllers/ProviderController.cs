@@ -39,14 +39,14 @@ namespace AspMyDelivery.API.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] ProviderForCreateViewModel provider)
+        public void Post([FromBody] CreateProviderViewModel provider)
         {
             var providerEntity = _mapper.Map<Provider>(provider);
             _providerService.AddProvider(providerEntity);
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] ProviderForCreateViewModel provider)
+        public void Put(int id, [FromBody] CreateProviderViewModel provider)
         {
             var providerEntity = _mapper.Map<Provider>(provider);
             providerEntity.Id = id;

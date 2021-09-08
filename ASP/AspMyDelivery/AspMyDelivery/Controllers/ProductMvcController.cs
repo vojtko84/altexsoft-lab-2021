@@ -37,7 +37,7 @@ namespace AspMyDelivery.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, ProductForEditViewModel product)
+        public IActionResult Edit(int id, EditProductViewModel product)
         {
             if (!ModelState.IsValid)
             {
@@ -53,7 +53,7 @@ namespace AspMyDelivery.API.Controllers
         public IActionResult Edit(int id)
         {
             var product = _productService.GetProduct(id);
-            var productEntity = _mapper.Map<ProductForEditViewModel>(product);
+            var productEntity = _mapper.Map<EditProductViewModel>(product);
 
             return View(productEntity);
         }
@@ -65,7 +65,7 @@ namespace AspMyDelivery.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(ProductForCreateViewModel product)
+        public IActionResult Create(CreateProductViewModel product)
         {
             if (!ModelState.IsValid)
             {
