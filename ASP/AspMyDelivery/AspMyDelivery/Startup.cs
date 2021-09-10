@@ -7,6 +7,7 @@ using DeliveryEF.Data.UoW;
 using DeliveryEF.Domain.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -67,6 +68,11 @@ namespace AspMyDelivery
             app.UseRouting();
 
             app.UseAuthorization();
+            app.Use(next => context =>
+            {
+                context.Request.EnableBuffering();
+                return next(context);
+            });
 
             app.UseEndpoints(endpoints =>
             {

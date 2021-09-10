@@ -1,17 +1,37 @@
 ﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace AspMyDelivery.API.Filters
 {
-    public class MyActionFilter : IActionFilter
+    public class MyActionFilter : IAsyncActionFilter
     {
-        public void OnActionExecuted(ActionExecutedContext context)
+        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-        }
+            ActionExecutedContext rContext = null;
+            string stringContent = string.Empty;
 
-        public void OnActionExecuting(ActionExecutingContext context)
-        {
-            Console.WriteLine(context.HttpContext.Request.Body);
+            try
+            {
+                context.HttpContext.Request.EnableBuffering();
+                context.HttpContext.Request.Body.Position = 0;
+
+                using (var reader = new StreamReader(context.HttpContext.Request.Body))
+                {
+                    stringContent = await reader.ReadToEndAsync();
+
+                    context.HttpContext.Request.Body.Position = 0;
+                }
+
+                rContext = await next();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            Console.WriteLine(stringContent);
         }
     }
 }

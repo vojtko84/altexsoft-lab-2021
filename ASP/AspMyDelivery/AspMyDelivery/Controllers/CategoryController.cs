@@ -24,7 +24,7 @@ namespace AspMyDelivery.API.Controllers
             _logger = logger;
         }
 
-        [HttpGet]        
+        [HttpGet]
         public IEnumerable<CategoryViewModel> Get()
         {
             var categories = _categoryService.GetCategories();
