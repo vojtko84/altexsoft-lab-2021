@@ -1,3 +1,4 @@
+using System;
 using AspMyDelivery.API.Filters;
 using AspMyDelivery.BLL.Interfaces;
 using AspMyDelivery.BLL.Services;
@@ -17,6 +18,7 @@ using MyDelivery.Controllers;
 using MyDelivery.Data;
 using MyDelivery.Interfaces;
 using MyDelivery.Loggers;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace AspMyDelivery
 {
@@ -31,6 +33,11 @@ namespace AspMyDelivery
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var configuration = new ConfigurationBuilder()
+               .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+               .AddJsonFile("appsettings.json")
+               .Build();
+
             services.AddControllers(o =>
             {
                 o.Filters.Add(typeof(MyExceptionFilter));
@@ -40,6 +47,7 @@ namespace AspMyDelivery
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AspMyDelivery", Version = "v1" });
             });
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<DbContext, DataContext>();
             services.AddTransient<IRepository<Product>, EFRepository<Product>>();
             services.AddTransient<IRepository<Category>, EFRepository<Category>>();
@@ -52,6 +60,7 @@ namespace AspMyDelivery
             services.AddTransient<IProviderService, ProviderService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddTransient<MyActionFilter>();
+            services.AddResponseCaching();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -64,6 +73,8 @@ namespace AspMyDelivery
             }
 
             app.UseHttpsRedirection();
+
+            app.UseResponseCaching();
 
             app.UseRouting();
 
