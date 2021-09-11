@@ -18,7 +18,6 @@ using MyDelivery.Controllers;
 using MyDelivery.Data;
 using MyDelivery.Interfaces;
 using MyDelivery.Loggers;
-using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace AspMyDelivery
 {
