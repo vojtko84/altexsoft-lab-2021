@@ -13,24 +13,18 @@ namespace AspMyDelivery.API.Filters
             ActionExecutedContext rContext = null;
             string stringContent = string.Empty;
 
-            try
+            context.HttpContext.Request.EnableBuffering();
+            context.HttpContext.Request.Body.Position = 0;
+
+            using (var reader = new StreamReader(context.HttpContext.Request.Body))
             {
-                context.HttpContext.Request.EnableBuffering();
+                stringContent = await reader.ReadToEndAsync();
+
                 context.HttpContext.Request.Body.Position = 0;
-
-                using (var reader = new StreamReader(context.HttpContext.Request.Body))
-                {
-                    stringContent = await reader.ReadToEndAsync();
-
-                    context.HttpContext.Request.Body.Position = 0;
-                }
-
-                rContext = await next();
             }
-            catch (Exception)
-            {
-                throw;
-            }
+
+            rContext = await next();
+
             Console.WriteLine(stringContent);
         }
     }
