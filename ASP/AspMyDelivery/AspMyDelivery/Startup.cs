@@ -32,11 +32,6 @@ namespace AspMyDelivery
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var configuration = new ConfigurationBuilder()
-               .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-               .AddJsonFile("appsettings.json")
-               .Build();
-
             services.AddControllers(o =>
             {
                 o.Filters.Add(typeof(MyExceptionFilter));
@@ -46,7 +41,7 @@ namespace AspMyDelivery
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AspMyDelivery", Version = "v1" });
             });
-            services.AddDbContext<DataContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<DbContext, DataContext>();
             services.AddTransient<IRepository<Product>, EFRepository<Product>>();
             services.AddTransient<IRepository<Category>, EFRepository<Category>>();
