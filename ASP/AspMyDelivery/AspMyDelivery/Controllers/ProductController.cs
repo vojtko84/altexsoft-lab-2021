@@ -3,6 +3,7 @@ using AspMyDelivery.API.ViewModels;
 using AutoMapper;
 using DeliveryEF.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using MyDelivery.Interfaces;
 
 namespace AspMyDelivery.API.Controllers
@@ -13,11 +14,13 @@ namespace AspMyDelivery.API.Controllers
     {
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
+        private readonly ILogger<ProductController> _logger;
 
-        public ProductController(IProductService productService, IMapper mapper)
+        public ProductController(IProductService productService, IMapper mapper, ILogger<ProductController> logger)
         {
             _productService = productService;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet]

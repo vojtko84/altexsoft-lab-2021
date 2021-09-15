@@ -9,11 +9,11 @@ namespace MyDelivery.Controllers
     public class OrderService : IOrderService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger logger;
+        private readonly IMyLogger logger;
         private readonly ICache cache;
         private readonly IPriceService priceController;
 
-        public OrderService(IUnitOfWork unitOfWork, ILogger logger, ICache cache, IPriceService priceController)
+        public OrderService(IUnitOfWork unitOfWork, IMyLogger logger, ICache cache, IPriceService priceController)
         {
             _unitOfWork = unitOfWork;
             this.logger = logger;

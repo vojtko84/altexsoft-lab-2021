@@ -1,3 +1,4 @@
+using AspMyDelivery.API.Filters;
 using AspMyDelivery.BLL.Interfaces;
 using AspMyDelivery.BLL.Services;
 using DeliveryEF.Data;
@@ -6,6 +7,7 @@ using DeliveryEF.Data.UoW;
 using DeliveryEF.Domain.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,7 +31,10 @@ namespace AspMyDelivery
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(o =>
+            {
+                o.Filters.Add(typeof(MyExceptionFilter));
+            });
             services.AddControllersWithViews();
             services.AddSwaggerGen(c =>
             {
@@ -40,12 +45,13 @@ namespace AspMyDelivery
             services.AddTransient<IRepository<Category>, EFRepository<Category>>();
             services.AddTransient<IRepository<Provider>, EFRepository<Provider>>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<ILogger, Logger>();
+            services.AddTransient<IMyLogger, MyLogger>();
             services.AddTransient<ICache, Cache>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IProviderService, ProviderService>();
             services.AddAutoMapper(typeof(Startup));
+            services.AddTransient<MyActionFilter>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -62,6 +68,11 @@ namespace AspMyDelivery
             app.UseRouting();
 
             app.UseAuthorization();
+            app.Use(next => context =>
+            {
+                context.Request.EnableBuffering();
+                return next(context);
+            });
 
             app.UseEndpoints(endpoints =>
             {
