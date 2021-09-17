@@ -32,7 +32,7 @@ namespace AspMyDelivery.API.Filters
                 context.ExceptionHandled = true;
             }
 
-            if (_environment.IsEnvironment("Prodaction"))
+            if (_environment.IsProduction())
             {
                 System.Console.WriteLine("QA");
                 _logger.LogWarning($"In {context.ActionDescriptor.DisplayName}: \n {context.Exception.Message} ");
