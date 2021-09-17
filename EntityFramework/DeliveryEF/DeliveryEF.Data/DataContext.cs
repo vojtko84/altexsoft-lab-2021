@@ -14,9 +14,12 @@ namespace DeliveryEF.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Provider> Providers { get; set; }
 
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer("Data Source=DESKTOP-4CRRHI0;Initial Catalog=DeliveryEF;Integrated Security=True");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

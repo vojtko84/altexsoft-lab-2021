@@ -24,6 +24,7 @@ namespace AspMyDelivery.API.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 120)]
         public IEnumerable<ProductViewModel> Get()
         {
             var products = _productService.GetProducts();

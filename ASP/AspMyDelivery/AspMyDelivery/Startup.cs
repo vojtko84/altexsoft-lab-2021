@@ -1,3 +1,4 @@
+using System;
 using AspMyDelivery.API.Filters;
 using AspMyDelivery.BLL.Interfaces;
 using AspMyDelivery.BLL.Services;
@@ -40,6 +41,7 @@ namespace AspMyDelivery
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AspMyDelivery", Version = "v1" });
             });
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<DbContext, DataContext>();
             services.AddTransient<IRepository<Product>, EFRepository<Product>>();
             services.AddTransient<IRepository<Category>, EFRepository<Category>>();
@@ -52,6 +54,7 @@ namespace AspMyDelivery
             services.AddTransient<IProviderService, ProviderService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddTransient<MyActionFilter>();
+            services.AddResponseCaching();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -64,6 +67,8 @@ namespace AspMyDelivery
             }
 
             app.UseHttpsRedirection();
+
+            app.UseResponseCaching();
 
             app.UseRouting();
 
